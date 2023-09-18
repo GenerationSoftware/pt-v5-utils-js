@@ -4,6 +4,7 @@ import { Provider } from '@ethersproject/providers';
 import { ContractsBlob, PrizePoolInfo, TierPrizeData } from '../types';
 import { findPrizePoolInContracts } from '../utils';
 
+// OPTIMIZE: Could use multicall reads here
 /**
  * Gather information about the given prize pool's previous drawId and tiers
  * @param readProvider a read-capable provider for the chain that should be queried
@@ -52,6 +53,8 @@ export const getPrizePoolInfo = async (
       prizeIndicesCount: -1,
       prizeIndicesRangeArray: [],
       amount: BigNumber.from(0),
+      liquidity: BigNumber.from(0),
+      maxPrizesForRemainingLiquidity: -1,
     });
 
     const prizeCount = await prizePoolContract.functions['getTierPrizeCount(uint8)'](tierNum);
@@ -62,6 +65,12 @@ export const getPrizePoolInfo = async (
 
     // Prize Amount
     tier.amount = await prizePoolContract.getTierPrizeSize(tierNum);
+
+    // Prize Liquidity
+    tier.liquidity = await prizePoolContract.getTierRemainingLiquidity(tierNum);
+
+    // Max # of prizes claimable based on remaining liquidity
+    tier.maxPrizesForRemainingLiquidity = Number(tier.liquidity.div(tier.amount));
   }
 
   prizePoolInfo.numPrizeIndices = Object.values(prizePoolInfo.tierPrizeData).reduce(
