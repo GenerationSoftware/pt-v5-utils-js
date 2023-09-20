@@ -40,27 +40,31 @@ The repo can be cloned from Github for contributions.
 git clone https://github.com/pooltogether/v5-utils-js
 ```
 
-# 🏆 Quickstart (Contracts Blob)
+# 📄 Contracts Blob
 
-Getting the list of contracts for a specific network is easy using the `downloadContractsBlob(chainId)` function.
+### `downloadContractsBlob(chainId)`
+
+Gets the list of contracts for a specific network.
 
 Currently supports:
 
-- Optimism Goerli (testnet)
-- Goerli (testnet)
+- Ethereum
+- Optimism
 
 ```ts
 import { downloadContractsBlob } from "@pooltogether/v5-utils-js";
 
-async function main() {
+async function runAsync() {
   const contracts = await downloadContractsBlob(chainId);
 }
-main();
+runAsync();
 ```
 
-# 🏆 Quickstart (Draw Results)
+# 🏆 Draw Results
 
-`computeDrawWinners(provider, contracts, chainId)` computes and returns a JSON blob of all previous draw winner's Claim objects for each tier of a prize pool, grouped by vault.
+### `computeDrawWinners(provider, contracts, chainId)`
+
+A helper function that runs five intensive utility functions to compute and return a JSON blob of all previous draw winner's Claim objects for each tier of a prize pool, grouped by vault.
 
 ```ts
 import { computeDrawWinners } from "@pooltogether/v5-utils-js";
@@ -68,7 +72,7 @@ import { computeDrawWinners } from "@pooltogether/v5-utils-js";
 // Compute Winners for the last Draw
 const winners = computeDrawWinners(provider, contracts, chainId);
 
-// Returns Claim[]:
+// Returns Claim[] array:
 //
 // interface Claim {
 //   vault: string;
@@ -80,10 +84,130 @@ const winners = computeDrawWinners(provider, contracts, chainId);
 //
 ```
 
-<!--
-# 📖 Documentation
+# 🏊 Prize Pool Info
 
-### Namespaces
+### `getPrizePoolInfo(readProvider, contracts)`
 
-- [compute](docs/md/modules/compute.md)
-- [utils](docs/md/modules/utils.md) -->
+Gathers info about the prize pool contained in provided the `contracts` JSON blob.
+
+```ts
+import { getPrizePoolInfo, PrizePoolInfo } from "@pooltogether/v5-utils-js";
+
+async function runAsync() {
+  const prizePoolInfo: PrizePoolInfo = await getPrizePoolInfo(readProvider, contracts);
+}
+runAsync();
+
+// Returns PrizePoolInfo object:
+//
+// interface PrizePoolInfo {
+//   drawId: number;
+//   numTiers: number;
+//   numPrizeIndices: number;
+//   reserve: string;
+//   tiersRangeArray: number[]; // an easily iterable range of numbers for each tier available (ie. [0, 1, 2])
+//   tierPrizeData: {
+//     [tierNum: string]: TierPrizeData;
+//   };
+// }
+//
+// interface TierPrizeData {
+//   prizeIndicesCount: number;
+//   prizeIndicesRangeArray: number[]; // an easily iterable range of numbers for each tier's prize indices
+//   amount: BigNumber;
+//   liquidity: BigNumber;
+//   maxPrizesForRemainingLiquidity: number;
+// }
+//
+```
+
+# 🏦 Get Subgraph Vaults
+
+### `getSubgraphVaults(chainId)`
+
+Collects all vaults from the TwabController subgraph into an array
+
+```ts
+import { getSubgraphVaults } from "@pooltogether/v5-utils-js";
+
+async function runAsync() {
+  let vaults = await getSubgraphVaults(chainId);
+}
+runAsync();
+
+// Returns Vault[] array:
+//
+// interface Vault {
+//  id: string;
+//  accounts: VaultAccount[]; // empty
+// }
+```
+
+# 👥 Populate Subgraph Vault Accounts
+
+### `populateSubgraphVaultAccounts(chainId, vaults)`
+
+Takes the vaults from `getSubgraphVaults` and adds user deposit account arrays for each of the vaults. `populateSubgraphVaultAccounts` is split up into a separate call from `getSubgraphVaults` as it's very network heavy, needing to page through potentially hundreds of thousands of accounts from the subgraph.
+
+```ts
+import { populateSubgraphVaultAccounts } from "@pooltogether/v5-utils-js";
+
+async function runAsync() {
+  vaults = await populateSubgraphVaultAccounts(chainId, vaults);
+}
+runAsync();
+
+// Returns Vault[] array:
+//
+// interface Vault {
+//  ...
+//  accounts: VaultAccount[]; // populated!
+// }
+```
+
+# 🏁 Get Winner's Claims
+
+### `getWinnersClaims(readaProvider, prizePoolInfo, contracts, vaults)`
+
+Collects Claim objects into an array for all prizes in the past draw.
+
+```ts
+import { getWinnersClaims } from "@pooltogether/v5-utils-js";
+
+async function runAsync() {
+  let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);
+}
+runAsync();
+
+// Returns Claim[] array:
+//
+// interface Vault {
+//  vault: string;
+//  winner: string;
+//  tier: number;
+//  prizeIndex: number;
+//  claimed?: boolean; // null
+// }
+```
+
+# 🏁 Flag Claimed (RPC)
+
+### `flagClaimedRpc(readProvider, contracts, claims)`
+
+Adds the `claimed` boolean to the claims using RPC lookups.
+
+```ts
+import { flagClaimedRpc } from "@pooltogether/v5-utils-js";
+
+async function runAsync() {
+  claims = await flagClaimedRpc(readProvider, contracts, claims);
+}
+runAsync();
+
+// Returns Claim[] array:
+//
+// interface Vault {
+//  ...
+//  claimed?: boolean; // now set true or false
+// }
+```
