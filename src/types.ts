@@ -72,7 +72,6 @@ export interface TierPrizeData {
   prizeIndicesRangeArray: number[]; // an easily iterable range of numbers for each tier's prize indices
   amount: BigNumber;
   liquidity: BigNumber;
-  maxPrizesForRemainingLiquidity: number;
 }
 
 export interface PrizePoolInfo {

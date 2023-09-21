@@ -54,7 +54,6 @@ export const getPrizePoolInfo = async (
       prizeIndicesRangeArray: [],
       amount: BigNumber.from(0),
       liquidity: BigNumber.from(0),
-      maxPrizesForRemainingLiquidity: -1,
     });
 
     const prizeCount = await prizePoolContract.functions['getTierPrizeCount(uint8)'](tierNum);
@@ -68,9 +67,6 @@ export const getPrizePoolInfo = async (
 
     // Prize Liquidity
     tier.liquidity = await prizePoolContract.getTierRemainingLiquidity(tierNum);
-
-    // Max # of prizes claimable based on remaining liquidity
-    tier.maxPrizesForRemainingLiquidity = Number(tier.liquidity.div(tier.amount));
   }
 
   prizePoolInfo.numPrizeIndices = Object.values(prizePoolInfo.tierPrizeData).reduce(
