@@ -13,12 +13,12 @@ export const CONTRACTS_STORE: StringMap = {
   '5': 'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/main/deployments/ethGoerli/contracts.json',
   '10': 'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-mainnet/main/deployments/optimism/contracts.json',
   '420':
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/main/deployments/optimismGoerli/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/prod-testnet-2/deployments/optimismGoerli/contracts.json',
 };
 
 export const TWAB_CONTROLLER_SUBGRAPH_URIS = {
   [CHAIN_ID.optimism]: `https://api.studio.thegraph.com/query/41211/pt-v5-optimism-twab-controller/v0.0.1`,
-  [CHAIN_ID.optimismGoerli]: `https://api.studio.thegraph.com/query/41211/pt-v5-op-goerli-twab-control/v0.0.2`,
+  [CHAIN_ID.optimismGoerli]: `https://api.studio.thegraph.com/query/50959/pt-v5-op-goerli-twab-control/v0.0.1`,
 };
 
 export const PRIZE_POOL_SUBGRAPH_URIS = {
