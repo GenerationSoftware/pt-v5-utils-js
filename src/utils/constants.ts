@@ -23,5 +23,5 @@ export const TWAB_CONTROLLER_SUBGRAPH_URIS = {
 
 export const PRIZE_POOL_SUBGRAPH_URIS = {
   [CHAIN_ID.optimism]: `https://api.studio.thegraph.com/query/41211/pt-v5-optimism-prize-pool/v0.0.1`,
-  [CHAIN_ID.optimismGoerli]: `https://api.studio.thegraph.com/query/41211/pt-v5-op-goerli-prize-pool/v0.0.2`,
+  [CHAIN_ID.optimismGoerli]: `https://api.studio.thegraph.com/query/50959/pt-v5-op-goerli-prize-pool/v0.0.1`,
 };
