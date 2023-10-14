@@ -46,6 +46,11 @@ export interface Vault {
 
 export interface VaultAccount {
   id: string;
+  user: User;
+}
+
+export interface User {
+  address: string;
 }
 
 export interface Claim {

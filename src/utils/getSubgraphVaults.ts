@@ -103,6 +103,9 @@ const vaultAccountsQuery = () => {
     query drawQuery($first: Int!, $lastId: String, $vaultAddress: String!) {
       accounts(first: $first, where: { id_gt: $lastId, vault_: { id: $vaultAddress } }) {
         id
+        user {
+          address
+        }
       }
     }
   `;

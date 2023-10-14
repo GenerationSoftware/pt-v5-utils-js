@@ -55,14 +55,13 @@ export const getWinnersClaims = async (
 
     for (let vaultAccountArray of vaultAccountArrays) {
       for (let account of vaultAccountArray) {
-        const address = account.id.split('-')[1];
+        const address = account.user.address;
 
         for (let tierNum of prizePoolInfo.tiersRangeArray) {
           const tier: TierPrizeData = prizePoolInfo.tierPrizeData[tierNum];
           // console.log(`${tier.prizeIndicesCount} prizes for tier ${tierNum}.`);
 
           for (let prizeIndex of tier.prizeIndicesRangeArray) {
-            // console.log(`${vault.id}-${address}-${tierNum}-${prizeIndex}`);
             const key = `${vault.id}-${address}-${tierNum}-${prizeIndex}`;
             toQuery[key] = prizePoolContract.isWinner(vault.id, address, tierNum, prizeIndex);
           }
