@@ -1,22 +1,7 @@
-import { gql, GraphQLClient } from 'graphql-request';
+import { gql } from 'graphql-request';
 
-import { PRIZE_POOL_SUBGRAPH_URIS } from './constants';
+import { getSubgraphClient } from './getSubgraphClient';
 import { ClaimedPrize } from '../types';
-
-/**
- * Subgraphs to query for depositors
- */
-export const getPrizePoolSubgraphUri = (chainId: number) => {
-  return PRIZE_POOL_SUBGRAPH_URIS[chainId];
-};
-
-export const getPrizePoolSubgraphClient = (chainId: number, fetch?: any) => {
-  const uri = getPrizePoolSubgraphUri(chainId);
-
-  return new GraphQLClient(uri, {
-    fetch,
-  });
-};
 
 /**
  * Pulls from the subgraph all of the claimed prizes for a specific draw
@@ -27,9 +12,9 @@ export const getSubgraphClaimedPrizes = async (
   chainId: number,
   drawId: number,
 ): Promise<ClaimedPrize[]> => {
-  const client = getPrizePoolSubgraphClient(chainId);
+  const client = getSubgraphClient(chainId);
 
-  const query = drawQuery();
+  const query = drawPrizeClaimsQuery();
   const variables = { id: drawId.toString() };
 
   // @ts-ignore: ignore types from GraphQL client lib
@@ -41,9 +26,9 @@ export const getSubgraphClaimedPrizes = async (
   return claimedPrizesResponse?.draw?.prizeClaims || [];
 };
 
-const drawQuery = () => {
+const drawPrizeClaimsQuery = () => {
   return gql`
-    query drawQuery($id: String!) {
+    query drawPrizeClaimsQuery($id: String!) {
       draw(id: $id) {
         id
         prizeClaims {

@@ -124,7 +124,7 @@ runAsync();
 
 ### `getSubgraphVaults(chainId)`
 
-Collects all vaults from the TwabController subgraph into an array
+Collects all vaults from the PT v5 subgraph for a specific chain into an array.
 
 ```ts
 import { getSubgraphVaults } from "@pooltogether/v5-utils-js";

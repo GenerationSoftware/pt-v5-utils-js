@@ -16,10 +16,6 @@ export const CONTRACTS_STORE: StringMap = {
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/prod-testnet-2/deployments/optimismGoerli/contracts.json',
 };
 
-export const TWAB_CONTROLLER_SUBGRAPH_URIS = {
-  [CHAIN_ID.optimismGoerli]: `https://api.studio.thegraph.com/query/50959/pt-v5-op-goerli/version/latest`,
-};
-
-export const PRIZE_POOL_SUBGRAPH_URIS = {
+export const SUBGRAPH_URIS = {
   [CHAIN_ID.optimismGoerli]: `https://api.studio.thegraph.com/query/50959/pt-v5-op-goerli/version/latest`,
 };

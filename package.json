@@ -1,12 +1,15 @@
 {
     "name": "@generationsoftware/pt-v5-utils-js",
     "description": "Utility library for PoolTogether v5 computations.",
-    "author": "PoolTogether Inc",
+    "author": {
+        "name": "G9 Software Inc.",
+        "url": "https://github.com/generationsoftware"
+    },
     "license": "GPL-3.0-only",
-    "version": "0.0.1-beta.49",
-    "homepage": "https://github.com/pooltogether/pt-v5-utils-js",
+    "version": "0.0.1-beta.50",
+    "homepage": "https://github.com/generationsoftware/pt-v5-utils-js",
     "bugs": {
-        "url": "https://github.com/pooltogether/issues",
+        "url": "https://github.com/generationsoftware/issues",
         "email": "bugs@pooltogether.com"
     },
     "engines": {

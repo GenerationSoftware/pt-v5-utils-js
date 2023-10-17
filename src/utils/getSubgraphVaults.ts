@@ -1,24 +1,9 @@
-import { gql, GraphQLClient } from 'graphql-request';
+import { gql } from 'graphql-request';
 
-import { TWAB_CONTROLLER_SUBGRAPH_URIS } from './constants';
+import { getSubgraphClient } from './getSubgraphClient';
 import { Vault } from '../types';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
-
-/**
- * Subgraphs to query for depositors
- */
-export const getTwabControllerSubgraphUri = (chainId: number) => {
-  return TWAB_CONTROLLER_SUBGRAPH_URIS[chainId];
-};
-
-export const getTwabControllerSubgraphClient = (chainId: number, fetch?: any) => {
-  const uri = getTwabControllerSubgraphUri(chainId);
-
-  return new GraphQLClient(uri, {
-    fetch,
-  });
-};
 
 /**
  * Pulls from the subgraph all of the vaults
@@ -26,7 +11,7 @@ export const getTwabControllerSubgraphClient = (chainId: number, fetch?: any) =>
  * @returns {Promise} Promise of an array of Vault objects
  */
 export const getSubgraphVaults = async (chainId: number): Promise<Vault[]> => {
-  const client = getTwabControllerSubgraphClient(chainId);
+  const client = getSubgraphClient(chainId);
 
   const query = vaultsQuery();
 
@@ -48,7 +33,7 @@ export const populateSubgraphVaultAccounts = async (
   chainId: number,
   vaults: Vault[],
 ): Promise<Vault[]> => {
-  const client = getTwabControllerSubgraphClient(chainId);
+  const client = getSubgraphClient(chainId);
 
   for (let i = 0; i < vaults.length; i++) {
     const vault = vaults[i];
