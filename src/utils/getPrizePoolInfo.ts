@@ -22,6 +22,7 @@ export const getPrizePoolInfo = async (
     reserve: '',
     tiersRangeArray: [],
     tierPrizeData: {},
+    isDrawFinalized: false,
   };
 
   const prizePoolContractBlob = findPrizePoolInContracts(contracts);
@@ -36,6 +37,7 @@ export const getPrizePoolInfo = async (
 
   // Draw ID
   prizePoolInfo.drawId = await prizePoolContract.getLastAwardedDrawId();
+  prizePoolInfo.isDrawFinalized = await prizePoolContract.isDrawFinalized(prizePoolInfo.drawId);
 
   // Number of Tiers
   prizePoolInfo.numTiers = await prizePoolContract.numberOfTiers();

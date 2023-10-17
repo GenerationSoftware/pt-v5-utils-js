@@ -81,6 +81,7 @@ export interface TierPrizeData {
 
 export interface PrizePoolInfo {
   drawId: number;
+  isDrawFinalized: boolean; // cannot claim for a draw that has been finalized
   numTiers: number;
   numPrizeIndices: number;
   reserve: string;
