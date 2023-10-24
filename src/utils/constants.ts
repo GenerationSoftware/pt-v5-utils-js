@@ -17,6 +17,6 @@ export const CONTRACTS_STORE: StringMap = {
 };
 
 export const SUBGRAPH_URIS = {
-  [CHAIN_ID.optimism]: 'https://api.studio.thegraph.com/query/50959/pt-v5-op/v0.0.1',
+  [CHAIN_ID.optimism]: 'https://api.studio.thegraph.com/query/50959/pt-v5-op/version/latest',
   [CHAIN_ID.optimismGoerli]: 'https://api.studio.thegraph.com/query/50959/pt-v5-op-goerli/v0.0.22',
 };
