@@ -6,11 +6,11 @@
 
 # 🧰 Javascript Utility Library - PoolTogether V5
 
-[📖 Documentation](https://v4.docs.pooltogether.com/protocol/next/introduction)
+[📖 Documentation](https://v4.docs.pooltogether.com/protocol/introduction)
 
 ## Compute
 
-The `@pooltogether/v5-utils-js` [node module package](https://www.npmjs.com/package/@pooltogether/v5-utils-js) provides computations for the PoolTogether v5 protocol.
+The `@generationsoftware/v5-utils-js` [node module package](https://www.npmjs.com/package/@generationsoftware/v5-utils-js) provides computations for the PoolTogether v5 protocol.
 
 High-order operations like processing subgraphs and chain state (draws, winners, etc..) is included in the `compute` namespaced functions.
 
@@ -20,24 +20,24 @@ Consume subgraph and protocol chain state to return computed outcomes:
 
 - [computeDrawWinners](docs/md/modules.md#computedrawwinners)
 
-[Create Issue](https://github.com/pooltogether/v5-utils-js/issues) to request new features.<br/>[Open Pull Request](#) adhering to Contribution guidelines.
+[Create Issue](https://github.com/generationsoftware/v5-utils-js/issues) to request new features.<br/>[Open Pull Request](#) adhering to Contribution guidelines.
 
 # 💾 Installation
 
 This project is available as an NPM package:
 
 ```sh
-npm install @pooltogether/v5-utils-js
+npm install @generationsoftware/v5-utils-js
 ```
 
 ```sh
-yarn add @pooltogether/v5-utils-js
+yarn add @generationsoftware/v5-utils-js
 ```
 
 The repo can be cloned from Github for contributions.
 
 ```sh
-git clone https://github.com/pooltogether/v5-utils-js
+git clone https://github.com/generationsoftware/v5-utils-js
 ```
 
 # 📄 Contracts Blob
@@ -52,7 +52,7 @@ Currently supports:
 - Optimism
 
 ```ts
-import { downloadContractsBlob } from "@pooltogether/v5-utils-js";
+import { downloadContractsBlob } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   const contracts = await downloadContractsBlob(chainId);
@@ -67,7 +67,7 @@ runAsync();
 A helper function that runs five intensive utility functions to compute and return a JSON blob of all previous draw winner's Claim objects for each tier of a prize pool, grouped by vault.
 
 ```ts
-import { computeDrawWinners } from "@pooltogether/v5-utils-js";
+import { computeDrawWinners } from "@generationsoftware/v5-utils-js";
 
 // Compute Winners for the last Draw
 const winners = computeDrawWinners(provider, contracts, chainId);
@@ -91,7 +91,7 @@ const winners = computeDrawWinners(provider, contracts, chainId);
 Gathers info about the prize pool contained in provided the `contracts` JSON blob.
 
 ```ts
-import { getPrizePoolInfo, PrizePoolInfo } from "@pooltogether/v5-utils-js";
+import { getPrizePoolInfo, PrizePoolInfo } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   const prizePoolInfo: PrizePoolInfo = await getPrizePoolInfo(readProvider, contracts);
@@ -127,7 +127,7 @@ runAsync();
 Collects all vaults from the PT v5 subgraph for a specific chain into an array.
 
 ```ts
-import { getSubgraphVaults } from "@pooltogether/v5-utils-js";
+import { getSubgraphVaults } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   let vaults = await getSubgraphVaults(chainId);
@@ -149,7 +149,7 @@ runAsync();
 Takes the vaults from `getSubgraphVaults` and adds user deposit account arrays for each of the vaults. `populateSubgraphVaultAccounts` is split up into a separate call from `getSubgraphVaults` as it's very network heavy, needing to page through potentially hundreds of thousands of accounts from the subgraph.
 
 ```ts
-import { populateSubgraphVaultAccounts } from "@pooltogether/v5-utils-js";
+import { populateSubgraphVaultAccounts } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   vaults = await populateSubgraphVaultAccounts(chainId, vaults);
@@ -171,7 +171,7 @@ runAsync();
 Collects Claim objects into an array for all prizes in the past draw.
 
 ```ts
-import { getWinnersClaims } from "@pooltogether/v5-utils-js";
+import { getWinnersClaims } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);
@@ -196,7 +196,7 @@ runAsync();
 Adds the `claimed` boolean to the claims using RPC lookups.
 
 ```ts
-import { flagClaimedRpc } from "@pooltogether/v5-utils-js";
+import { flagClaimedRpc } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   claims = await flagClaimedRpc(readProvider, contracts, claims);
