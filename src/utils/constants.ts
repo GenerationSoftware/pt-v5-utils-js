@@ -1,3 +1,7 @@
+interface StringMap {
+  [key: string]: string;
+}
+
 export const CHAIN_IDS = {
   mainnet: 1,
   optimism: 10,
@@ -7,10 +11,6 @@ export const CHAIN_IDS = {
   sepolia: 11155111,
   optimismSepolia: 11155420,
 };
-
-interface StringMap {
-  [key: string]: string;
-}
 
 export const CONTRACTS_STORE: StringMap = {
   [CHAIN_IDS.mainnet]:
