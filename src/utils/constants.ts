@@ -18,9 +18,9 @@ export const CONTRACTS_STORE: StringMap = {
   [CHAIN_IDS.optimism]:
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-mainnet/50a56ede71b3e9f4a2ba3bc6a8ae48360f70aa86/deployments/optimism/contracts.json',
   [CHAIN_IDS.sepolia]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/d44412f6392888a3a1e9f16fca93e2de45f85033/deployments/ethSepolia/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/51adf597e5e8d562ace2c0b2d030a69736a59957/deployments/ethSepolia/contracts.json',
   [CHAIN_IDS.arbitrumSepolia]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/83632ac5a6edaa8f01dce24a6fa637d6191d772a/deployments/arbitrumSepolia/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/51adf597e5e8d562ace2c0b2d030a69736a59957/deployments/arbitrumSepolia/contracts.json',
   [CHAIN_IDS.optimismSepolia]:
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/d44412f6392888a3a1e9f16fca93e2de45f85033/deployments/optimismSepolia/contracts.json',
 };
