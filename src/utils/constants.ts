@@ -31,5 +31,6 @@ export const SUBGRAPH_URIS = {
     'https://api.studio.thegraph.com/query/50959/pt-v5-eth-sepolia/version/latest',
   [CHAIN_IDS.arbitrumSepolia]:
     'https://api.thegraph.com/subgraphs/name/chuckbergeron/pt-v5-arb-sepolia', // note: hosted, switch to studio/decentralized when it's ready
-  [CHAIN_IDS.optimismSepolia]: '', // note: deploy studio/decentralized when it's ready
+  [CHAIN_IDS.optimismSepolia]:
+    'https://api.studio.thegraph.com/query/63100/pt-v5-op-sepolia/version/latest',
 };
