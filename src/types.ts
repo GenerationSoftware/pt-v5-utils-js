@@ -1,3 +1,4 @@
+import { RecordWithTtl } from 'dns';
 import { BigNumber } from 'ethers';
 
 export interface TokenData {
@@ -90,3 +91,13 @@ export interface PrizePoolInfo {
     [tierNum: string]: TierPrizeData;
   };
 }
+
+export type StringMap = Record<string, string>;
+
+export type NumberMap = Record<string, number>;
+
+export type ContractVersion = 'v50' | 'v51';
+
+export type ContractVersionMap = Record<ContractVersion, string>;
+
+export type VersionedStringMap = Record<ContractVersion, StringMap>;

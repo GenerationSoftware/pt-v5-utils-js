@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
 import { getSubgraphClient } from './getSubgraphClient';
-import { ClaimedPrize } from '../types';
+import { ClaimedPrize, ContractVersion } from '../types';
 
 /**
  * Pulls from the subgraph all of the claimed prizes for a specific draw
@@ -10,9 +10,10 @@ import { ClaimedPrize } from '../types';
  */
 export const getSubgraphClaimedPrizes = async (
   chainId: number,
+  version: ContractVersion,
   drawId: number,
 ): Promise<ClaimedPrize[]> => {
-  const client = getSubgraphClient(chainId);
+  const client = getSubgraphClient(chainId, version);
 
   const query = drawPrizeClaimsQuery();
   const variables = { id: drawId.toString() };

@@ -1,13 +1,14 @@
 import { getSubgraphClaimedPrizes } from './getSubgraphClaimedPrizes';
-import { ClaimedPrize, Claim, PrizePoolInfo } from '../types';
+import { ClaimedPrize, Claim, PrizePoolInfo, ContractVersion } from '../types';
 
 export const flagClaimedSubgraph = async (
   chainId: number,
+  version: ContractVersion,
   claims: Claim[],
   prizePoolInfo: PrizePoolInfo,
 ): Promise<Claim[]> => {
   const drawId = prizePoolInfo.drawId;
-  const claimedPrizes: ClaimedPrize[] = await getSubgraphClaimedPrizes(chainId, drawId);
+  const claimedPrizes: ClaimedPrize[] = await getSubgraphClaimedPrizes(chainId, version, drawId);
 
   const formattedClaimedPrizes = claimedPrizes.map((claimedPrize) => {
     // From Subgraph, `id` is:

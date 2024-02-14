@@ -1,4 +1,4 @@
-import { ContractsBlob } from '../types';
+import { ContractsBlob, ContractVersion } from '../types';
 import { CONTRACTS_STORE } from '../utils/constants';
 
 const nodeFetch = require('node-fetch');
@@ -10,6 +10,7 @@ const nodeFetch = require('node-fetch');
  */
 export const downloadContractsBlob = async (
   chainId: number,
+  version: ContractVersion,
   fetch?: any,
 ): Promise<ContractsBlob> => {
   let contracts;
@@ -19,7 +20,7 @@ export const downloadContractsBlob = async (
   }
 
   try {
-    const response = await fetch(CONTRACTS_STORE[chainId.toString()]);
+    const response = await fetch(CONTRACTS_STORE[version][chainId.toString()]);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
