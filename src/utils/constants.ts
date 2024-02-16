@@ -42,6 +42,7 @@ export const SUBGRAPH_URIS: VersionedStringMap = {
   },
   v51: {
     [CHAIN_IDS.optimism]: '',
-    [CHAIN_IDS.optimismSepolia]: '',
+    [CHAIN_IDS.optimismSepolia]:
+      'https://api.studio.thegraph.com/query/63100/pt-v5-op-sepolia/version/latest',
   },
 };

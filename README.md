@@ -120,47 +120,55 @@ runAsync();
 //
 ```
 
-# 🏦 Get Subgraph Vaults
+# 🏦 Get Subgraph Prize Vaults
 
-### `getSubgraphVaults(chainId)`
+### `getSubgraphPrizeVaults(chainId)`
 
 Collects all vaults from the PT v5 subgraph for a specific chain into an array.
 
 ```ts
-import { getSubgraphVaults } from "@generationsoftware/v5-utils-js";
+import { getSubgraphPrizeVaults, ContractVersion } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
-  let vaults = await getSubgraphVaults(chainId);
+  const chainId = 11155420;
+  const contractVersion: ContractVersion = "v51";
+
+  const prizeVaults = await getSubgraphPrizeVaults(chainId, contractVersion);
 }
 runAsync();
 
-// Returns Vault[] array:
+// Returns PrizeVault[] array:
 //
-// interface Vault {
+// interface PrizeVault {
 //  id: string;
-//  accounts: VaultAccount[]; // empty
+//  accounts: PrizeVaultAccount[]; // empty
 // }
 ```
 
-# 👥 Populate Subgraph Vault Accounts
+# 👥 Populate Subgraph Prize Vault Accounts
 
-### `populateSubgraphVaultAccounts(chainId, vaults)`
+### `populateSubgraphPrizeVaultAccounts(chainId, vaults)`
 
-Takes the vaults from `getSubgraphVaults` and adds user deposit account arrays for each of the vaults. `populateSubgraphVaultAccounts` is split up into a separate call from `getSubgraphVaults` as it's very network heavy, needing to page through potentially hundreds of thousands of accounts from the subgraph.
+Takes the prize vaults from `getSubgraphPrizeVaults` and adds user deposit account arrays for each. `populateSubgraphPrizeVaultAccounts` is split up into a separate call from `getSubgraphPrizeVaults` as it's very network heavy, needing to page through potentially hundreds of thousands of accounts from the subgraph.
 
 ```ts
-import { populateSubgraphVaultAccounts } from "@generationsoftware/v5-utils-js";
+import { populateSubgraphPrizeVaultAccounts } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
-  vaults = await populateSubgraphVaultAccounts(chainId, vaults);
+  let prizeVaults = await getSubgraphPrizeVaults(chainId, contractVersion);
+
+  const chainId = 11155420;
+  const contractVersion: ContractVersion = "v51";
+
+  prizeVaults = await populateSubgraphPrizeVaultAccounts(chainId, contractVersion, prizeVaults);
 }
 runAsync();
 
-// Returns Vault[] array:
+// Returns PrizeVault[] array:
 //
-// interface Vault {
+// interface PrizeVault {
 //  ...
-//  accounts: VaultAccount[]; // populated!
+//  accounts: PrizeVaultAccount[]; // populated!
 // }
 ```
 

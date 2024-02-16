@@ -4,7 +4,7 @@ export * from './getContract';
 export * from './getContracts';
 export * from './getPrizePoolInfo';
 export * from './getWinnersClaims';
-export * from './getSubgraphVaults';
+export * from './getSubgraphPrizeVaults';
 
 export * from './getSubgraphClaimedPrizes';
 export * from './flagClaimedSubgraph';

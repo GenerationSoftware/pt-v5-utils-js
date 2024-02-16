@@ -1,57 +1,57 @@
 import { gql } from 'graphql-request';
 
 import { getSubgraphClient } from './getSubgraphClient';
-import { ContractVersion, Vault } from '../types';
+import { ContractVersion, PrizeVault } from '../types';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
 
 /**
- * Pulls from the subgraph all of the vaults
+ * Pulls from the subgraph all of the prize vaults
  *
- * @returns {Promise} Promise of an array of Vault objects
+ * @returns {Promise} Promise of an array of PrizeVault objects
  */
-export const getSubgraphVaults = async (
+export const getSubgraphPrizeVaults = async (
   chainId: number,
   version: ContractVersion,
-): Promise<Vault[]> => {
+): Promise<PrizeVault[]> => {
   const client = getSubgraphClient(chainId, version);
 
-  const query = vaultsQuery();
+  const query = prizeVaultsQuery();
 
   // @ts-ignore: ignore types from GraphQL client lib
-  const vaultsResponse: any = await client.request(query).catch((e) => {
+  const prizeVaultsResponse: any = await client.request(query).catch((e) => {
     console.error(e.message);
     throw e;
   });
 
-  return vaultsResponse?.vaults || [];
+  return prizeVaultsResponse?.prizeVaults || [];
 };
 
 /**
- * Pulls from the subgraph all of the accounts associated with the provided vaults
+ * Pulls from the subgraph all of the accounts associated with the provided prize vaults
  *
  * @returns {Promise} Promise of an array of Vault objects
  */
-export const populateSubgraphVaultAccounts = async (
+export const populateSubgraphPrizeVaultAccounts = async (
   chainId: number,
   version: ContractVersion,
-  vaults: Vault[],
-): Promise<Vault[]> => {
+  prizeVaults: PrizeVault[],
+): Promise<PrizeVault[]> => {
   const client = getSubgraphClient(chainId, version);
 
-  for (let i = 0; i < vaults.length; i++) {
-    const vault = vaults[i];
-    const vaultAddress = vault.id;
-    const query = vaultAccountsQuery();
+  for (let i = 0; i < prizeVaults.length; i++) {
+    const prizeVault = prizeVaults[i];
+    const prizeVaultAddress = prizeVault.id;
+    const query = prizeVaultAccountsQuery();
 
-    if (!vault.accounts) {
-      vault.accounts = [];
+    if (!prizeVault.accounts) {
+      prizeVault.accounts = [];
     }
 
     let lastId = '';
     while (true) {
       const variables = {
-        vaultAddress,
+        prizeVaultAddress,
         first: GRAPH_QUERY_PAGE_SIZE,
         lastId,
       };
@@ -63,7 +63,7 @@ export const populateSubgraphVaultAccounts = async (
       });
       const newAccounts = accountsResponse?.accounts || [];
 
-      vault.accounts = vault.accounts.concat(newAccounts);
+      prizeVault.accounts = prizeVault.accounts.concat(newAccounts);
 
       const numberOfResults = newAccounts.length;
       if (numberOfResults < GRAPH_QUERY_PAGE_SIZE) {
@@ -74,23 +74,23 @@ export const populateSubgraphVaultAccounts = async (
     }
   }
 
-  return vaults;
+  return prizeVaults;
 };
 
-const vaultsQuery = () => {
+const prizeVaultsQuery = () => {
   return gql`
     {
-      vaults {
+      prizeVaults {
         id
       }
     }
   `;
 };
 
-const vaultAccountsQuery = () => {
+const prizeVaultAccountsQuery = () => {
   return gql`
-    query drawQuery($first: Int!, $lastId: String, $vaultAddress: String!) {
-      accounts(first: $first, where: { id_gt: $lastId, vault_: { id: $vaultAddress } }) {
+    query drawQuery($first: Int!, $lastId: String, $prizeVaultAddress: String!) {
+      accounts(first: $first, where: { id_gt: $lastId, vault_: { id: $prizeVaultAddress } }) {
         id
         user {
           address

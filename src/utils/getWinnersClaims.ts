@@ -3,7 +3,14 @@ import { Provider } from '@ethersproject/providers';
 import { MulticallWrapper } from 'ethers-multicall-provider';
 import * as _ from 'lodash';
 
-import { Claim, ContractsBlob, Vault, PrizePoolInfo, TierPrizeData, VaultAccount } from '../types';
+import {
+  Claim,
+  ContractsBlob,
+  PrizeVault,
+  PrizeVaultAccount,
+  PrizePoolInfo,
+  TierPrizeData,
+} from '../types';
 import { findPrizePoolInContracts } from '../utils';
 import { getEthersMulticallProviderResults } from './multicall';
 
@@ -23,7 +30,7 @@ export const getWinnersClaims = async (
   readProvider: Provider,
   prizePoolInfo: PrizePoolInfo,
   contracts: ContractsBlob,
-  vaults: Vault[],
+  vaults: PrizeVault[],
 ): Promise<Claim[]> => {
   const prizePoolContractBlob = findPrizePoolInContracts(contracts);
   const prizePoolAddress: string | undefined = prizePoolContractBlob?.address;
@@ -100,7 +107,7 @@ const getClaims = (queries: Record<string, any>): Claim[] => {
   return claims;
 };
 
-const splitArray = function (array: VaultAccount[], size: number) {
+const splitArray = function (array: PrizeVaultAccount[], size: number) {
   let array2 = array.slice(0),
     arrays = [];
 

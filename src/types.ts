@@ -40,12 +40,12 @@ export interface ContractsBlob {
   contracts: ContractData[];
 }
 
-export interface Vault {
+export interface PrizeVault {
   id: string;
-  accounts: VaultAccount[];
+  accounts: PrizeVaultAccount[];
 }
 
-export interface VaultAccount {
+export interface PrizeVaultAccount {
   id: string;
   user: User;
 }

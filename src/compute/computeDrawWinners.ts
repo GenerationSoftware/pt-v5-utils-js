@@ -1,6 +1,9 @@
 import { Provider } from '@ethersproject/providers';
 
-import { getSubgraphVaults, populateSubgraphVaultAccounts } from '../utils/getSubgraphVaults';
+import {
+  getSubgraphPrizeVaults,
+  populateSubgraphPrizeVaultAccounts,
+} from '../utils/getSubgraphPrizeVaults';
 import { getWinnersClaims } from '../utils/getWinnersClaims';
 import { getPrizePoolInfo } from '../utils/getPrizePoolInfo';
 import { flagClaimedRpc } from '../utils/flagClaimedRpc';
@@ -22,13 +25,13 @@ export async function computeDrawWinners(
   const prizePoolInfo: PrizePoolInfo = await getPrizePoolInfo(readProvider, contracts);
 
   // #2. Collect all vaults
-  let vaults = await getSubgraphVaults(chainId, version);
+  let vaults = await getSubgraphPrizeVaults(chainId, version);
   if (vaults.length === 0) {
     throw new Error('Claimer: No vaults found in subgraph');
   }
 
   // #3. Page through and concat all accounts for all vaults
-  vaults = await populateSubgraphVaultAccounts(chainId, version, vaults);
+  vaults = await populateSubgraphPrizeVaultAccounts(chainId, version, vaults);
 
   // #4. Determine winners for last draw
   let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);
