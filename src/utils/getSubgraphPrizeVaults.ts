@@ -90,7 +90,7 @@ const prizeVaultsQuery = () => {
 const prizeVaultAccountsQuery = () => {
   return gql`
     query drawQuery($first: Int!, $lastId: String, $prizeVaultAddress: String!) {
-      accounts(first: $first, where: { id_gt: $lastId, vault_: { id: $prizeVaultAddress } }) {
+      accounts(first: $first, where: { id_gt: $lastId, prizeVault_: { id: $prizeVaultAddress } }) {
         id
         user {
           address
