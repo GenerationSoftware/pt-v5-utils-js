@@ -26,7 +26,7 @@ export const CONTRACTS_STORE: VersionedStringMap = {
   v51: {
     [CHAIN_IDS.optimism]: '',
     [CHAIN_IDS.optimismSepolia]:
-      'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/c8f1f587e10ed51639c50ea9e190a26ba1c32e52/deployments/optimismSepolia/contracts.json',
+      'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/547fdad54e9fd67b008997658467688a515e2524/deployments/optimismSepolia/contracts.json',
   },
 };
 
