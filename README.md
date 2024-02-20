@@ -127,13 +127,12 @@ runAsync();
 Collects all vaults from the PT v5 subgraph for a specific chain into an array.
 
 ```ts
-import { getSubgraphPrizeVaults, ContractVersion } from "@generationsoftware/v5-utils-js";
+import { getSubgraphPrizeVaults } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
   const chainId = 11155420;
-  const contractVersion: ContractVersion = "v51";
 
-  const prizeVaults = await getSubgraphPrizeVaults(chainId, contractVersion);
+  const prizeVaults = await getSubgraphPrizeVaults(chainId);
 }
 runAsync();
 
@@ -155,12 +154,11 @@ Takes the prize vaults from `getSubgraphPrizeVaults` and adds user deposit accou
 import { populateSubgraphPrizeVaultAccounts } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
-  let prizeVaults = await getSubgraphPrizeVaults(chainId, contractVersion);
+  let prizeVaults = await getSubgraphPrizeVaults(chainId);
 
   const chainId = 11155420;
-  const contractVersion: ContractVersion = "v51";
 
-  prizeVaults = await populateSubgraphPrizeVaultAccounts(chainId, contractVersion, prizeVaults);
+  prizeVaults = await populateSubgraphPrizeVaultAccounts(chainId, prizeVaults);
 }
 runAsync();
 

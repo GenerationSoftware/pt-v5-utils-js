@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
 import { getSubgraphClient } from './getSubgraphClient';
-import { ContractVersion, PrizeVault } from '../types';
+import { PrizeVault } from '../types';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
 
@@ -10,11 +10,8 @@ const GRAPH_QUERY_PAGE_SIZE = 1000;
  *
  * @returns {Promise} Promise of an array of PrizeVault objects
  */
-export const getSubgraphPrizeVaults = async (
-  chainId: number,
-  version: ContractVersion,
-): Promise<PrizeVault[]> => {
-  const client = getSubgraphClient(chainId, version);
+export const getSubgraphPrizeVaults = async (chainId: number): Promise<PrizeVault[]> => {
+  const client = getSubgraphClient(chainId);
 
   const query = prizeVaultsQuery();
 
@@ -34,10 +31,9 @@ export const getSubgraphPrizeVaults = async (
  */
 export const populateSubgraphPrizeVaultAccounts = async (
   chainId: number,
-  version: ContractVersion,
   prizeVaults: PrizeVault[],
 ): Promise<PrizeVault[]> => {
-  const client = getSubgraphClient(chainId, version);
+  const client = getSubgraphClient(chainId);
 
   for (let i = 0; i < prizeVaults.length; i++) {
     const prizeVault = prizeVaults[i];
