@@ -13,7 +13,7 @@ export const CONTRACTS_STORE: Record<string, string> = {
   [CHAIN_IDS.mainnet]: '',
   [CHAIN_IDS.optimism]: '',
   [CHAIN_IDS.optimismGoerli]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/2bc3a98cb114d81d5bba7b7b63fd6eca30118ce9/deployments/optimismGoerli/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/0b0583efcdd2b792df2b05f1530431a30b7295c7/deployments/optimismGoerli/contracts.json',
   [CHAIN_IDS.optimismSepolia]:
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/547fdad54e9fd67b008997658467688a515e2524/deployments/optimismSepolia/contracts.json',
 };
