@@ -12,17 +12,16 @@ export const CHAIN_IDS: Record<string, number> = {
 export const CONTRACTS_STORE: Record<string, string> = {
   [CHAIN_IDS.mainnet]: '',
   [CHAIN_IDS.optimism]: '',
-  [CHAIN_IDS.sepolia]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/21c33e351b51aa43689fff6847d48333090aecb0/deployments/sepolia/contracts.json',
+  [CHAIN_IDS.sepolia]: '',
   [CHAIN_IDS.optimismGoerli]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/0b0583efcdd2b792df2b05f1530431a30b7295c7/deployments/optimismGoerli/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/21c33e351b51aa43689fff6847d48333090aecb0/deployments/optimismGoerli/contracts.json',
   [CHAIN_IDS.optimismSepolia]:
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/547fdad54e9fd67b008997658467688a515e2524/deployments/optimismSepolia/contracts.json',
 };
 
 export const SUBGRAPH_URIS: Record<string, string> = {
   [CHAIN_IDS.optimism]: '',
-  [CHAIN_IDS.sepolia]: 'https://api.studio.thegraph.com/query/63100/pt-v5-sepolia/version/latest',
+  [CHAIN_IDS.sepolia]: '',
   [CHAIN_IDS.optimismGoerli]:
     'https://api.studio.thegraph.com/query/63100/pt-v5-op-goerli-new/version/latest',
   [CHAIN_IDS.optimismSepolia]:
