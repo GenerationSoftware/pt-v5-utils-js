@@ -23,7 +23,7 @@ export const SUBGRAPH_URIS: Record<string, string> = {
   [CHAIN_IDS.optimism]: '',
   [CHAIN_IDS.sepolia]: '',
   [CHAIN_IDS.optimismGoerli]:
-    'https://api.studio.thegraph.com/query/63100/pt-v5-op-goerli-new/version/latest',
+    'https://api.studio.thegraph.com/query/63100/pt-v5-op-goerli-new/v0.0.7',
   [CHAIN_IDS.optimismSepolia]:
     'https://api.studio.thegraph.com/query/63100/pt-v5-op-sepolia/version/latest',
 };
