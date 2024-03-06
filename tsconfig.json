@@ -8,7 +8,6 @@
   "compilerOptions": {
     "declaration": true,
     "importHelpers": false,
-    "module": "commonjs",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
