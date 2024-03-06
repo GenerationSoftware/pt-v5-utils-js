@@ -26,7 +26,8 @@ export const CONTRACTS_STORE: StringMap = {
 };
 
 export const SUBGRAPH_URIS = {
-  [CHAIN_IDS.optimism]: 'https://api.studio.thegraph.com/query/50959/pt-v5-op/version/latest',
+  [CHAIN_IDS.optimism]:
+    'https://api.studio.thegraph.com/query/50959/pt-v5-op/version/latest?source=pooltogether',
   [CHAIN_IDS.sepolia]:
     'https://api.studio.thegraph.com/query/50959/pt-v5-eth-sepolia/version/latest',
   [CHAIN_IDS.arbitrumSepolia]:
