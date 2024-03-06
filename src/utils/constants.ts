@@ -20,7 +20,7 @@ export const CONTRACTS_STORE: Record<string, string> = {
 };
 
 export const SUBGRAPH_URIS: Record<string, string> = {
-  [CHAIN_IDS.optimism]: '',
+  [CHAIN_IDS.optimism]: '', // ?source=pooltogether
   [CHAIN_IDS.sepolia]: '',
   [CHAIN_IDS.optimismGoerli]:
     'https://api.studio.thegraph.com/query/63100/pt-v5-op-goerli-new/v0.0.7',
