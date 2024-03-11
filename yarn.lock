@@ -842,10 +842,10 @@ es6-promisify@^6.1.1:
   resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
   integrity sha512-HBL8I3mIki5C1Cc9QjKUenHtnG0A5/xA8Q/AllRcfiwl2CZFXGK7ddBiCoRwAix4i2KxcQfjtIVcrVbB3vbmwg==
 
-ethers-multicall-provider@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/ethers-multicall-provider/-/ethers-multicall-provider-3.0.3.tgz#3d37d21713d62313f4d64891c16432cbc6b2455b"
-  integrity sha512-nnpZoGnbjYfMPBTBIEN6XbLXfYYX7kLhYVA6mmT0yREnsKTR+LcsGW34Ua0Gq9K7yusDVio1sNyjJKXx7LslMA==
+ethers-multicall-provider@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/ethers-multicall-provider/-/ethers-multicall-provider-3.1.2.tgz#3899c6bacf3876e57198763cbb09c3659e7049c6"
+  integrity sha512-jCuvFFpB9Z8BWEornAPHCA5j2NlR8o7YU/VZdqNphHPOCcAMhZ0zvj5VW5i3qn2gtm1NzN2vVYwioMraCCkXEA==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/providers" "^5.7.2"

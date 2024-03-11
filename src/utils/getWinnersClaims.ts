@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { Provider } from '@ethersproject/providers';
-import { MulticallWrapper } from 'ethers-multicall-provider';
 import * as _ from 'lodash';
+import ethersMulticallProviderPkg from 'ethers-multicall-provider';
 
 import {
   Claim,
@@ -13,6 +13,8 @@ import {
 } from '../types';
 import { findPrizePoolInContracts } from '../utils';
 import { getEthersMulticallProviderResults } from './multicall';
+
+const { MulticallWrapper } = ethersMulticallProviderPkg;
 
 const CHUNK_MIN_SIZE = 8;
 const CHUNK_MAX_SIZE = 300;
