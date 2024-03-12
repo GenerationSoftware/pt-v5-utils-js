@@ -1,4 +1,3 @@
-import { RecordWithTtl } from 'dns';
 import { BigNumber } from 'ethers';
 
 export interface TokenData {

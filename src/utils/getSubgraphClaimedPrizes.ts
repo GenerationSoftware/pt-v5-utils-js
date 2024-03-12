@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
-import { getSubgraphClient } from './getSubgraphClient';
-import { ClaimedPrize } from '../types';
+import { getSubgraphClient } from './getSubgraphClient.js';
+import { ClaimedPrize } from '../types.js';
 
 /**
  * Pulls from the subgraph all of the claimed prizes for a specific draw

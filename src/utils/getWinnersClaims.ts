@@ -10,9 +10,9 @@ import {
   PrizeVaultAccount,
   PrizePoolInfo,
   TierPrizeData,
-} from '../types';
-import { findPrizePoolInContracts } from '../utils';
-import { getEthersMulticallProviderResults } from './multicall';
+} from '../types.js';
+import { findPrizePoolInContracts } from '../utils/index.js';
+import { getEthersMulticallProviderResults } from './multicall.js';
 
 const { MulticallWrapper } = ethersMulticallProviderPkg;
 

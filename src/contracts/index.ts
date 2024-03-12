@@ -1,1 +1,1 @@
-export { downloadContractsBlob } from './downloadContractsBlob';
+export { downloadContractsBlob } from './downloadContractsBlob.js';

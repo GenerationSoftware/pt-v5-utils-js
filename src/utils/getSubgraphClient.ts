@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 
-import { SUBGRAPH_URIS } from './constants';
+import { SUBGRAPH_URIS } from './constants.js';
 
 /**
  * Subgraphs to query for depositors

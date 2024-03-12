@@ -1,8 +1,8 @@
 import { ethers, BigNumber } from 'ethers';
 import { Provider } from '@ethersproject/providers';
 
-import { ContractsBlob, PrizePoolInfo, TierPrizeData } from '../types';
-import { findPrizePoolInContracts } from '../utils';
+import { ContractsBlob, PrizePoolInfo, TierPrizeData } from '../types.js';
+import { findPrizePoolInContracts } from '../utils/index.js';
 
 // OPTIMIZE: Could use multicall reads here
 /**

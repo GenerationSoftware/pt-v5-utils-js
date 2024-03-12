@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
-import { getSubgraphClient } from './getSubgraphClient';
-import { PrizeVault } from '../types';
+import { getSubgraphClient } from './getSubgraphClient.js';
+import { PrizeVault } from '../types.js';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
 

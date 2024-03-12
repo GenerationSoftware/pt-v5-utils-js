@@ -3,11 +3,11 @@ import { Provider } from '@ethersproject/providers';
 import {
   getSubgraphPrizeVaults,
   populateSubgraphPrizeVaultAccounts,
-} from '../utils/getSubgraphPrizeVaults';
-import { getWinnersClaims } from '../utils/getWinnersClaims';
-import { getPrizePoolInfo } from '../utils/getPrizePoolInfo';
-import { flagClaimedRpc } from '../utils/flagClaimedRpc';
-import { ContractsBlob, Claim, PrizePoolInfo } from '../types';
+} from '../utils/getSubgraphPrizeVaults.js';
+import { getWinnersClaims } from '../utils/getWinnersClaims.js';
+import { getPrizePoolInfo } from '../utils/getPrizePoolInfo.js';
+import { flagClaimedRpc } from '../utils/flagClaimedRpc.js';
+import { ContractsBlob, Claim, PrizePoolInfo } from '../types.js';
 
 /**
  * Finds out which of the accounts in each vault are winners for the last draw and formats

@@ -1,7 +1,7 @@
 import { Contract } from 'ethers';
 
-import { getContracts } from './getContracts';
-import { ContractsBlob } from '../types';
+import { getContracts } from './getContracts.js';
+import { ContractsBlob } from '../types.js';
 
 // Returns the first contract that matches the params by name, chain, and contract version
 export function getContract(
