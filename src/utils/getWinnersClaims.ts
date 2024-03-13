@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { Provider } from '@ethersproject/providers';
-import * as _ from 'lodash';
+import pickBy from 'lodash.pickby';
 import ethersMulticallProviderPkg from 'ethers-multicall-provider';
 
 import {
@@ -97,7 +97,7 @@ export const getWinnersClaims = async (
 
 const getClaims = (queries: Record<string, any>): Claim[] => {
   // Filter to only 'true' results of isWinner() calls
-  const filteredWinners = _.pickBy(queries, (object) => !!object);
+  const filteredWinners = pickBy(queries, (object: any) => !!object);
 
   // Push to claims array
   const claims: Claim[] = Object.keys(filteredWinners).map((vaultUserTierResult) => {

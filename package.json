@@ -6,7 +6,7 @@
         "url": "https://github.com/generationsoftware"
     },
     "license": "MIT",
-    "version": "1.1.0-beta.1",
+    "version": "1.1.0-beta.2",
     "homepage": "https://github.com/generationsoftware/pt-v5-utils-js",
     "bugs": {
         "url": "https://github.com/generationsoftware/issues",
@@ -30,7 +30,9 @@
         "docs:html": "yarn typedoc --plugin none --out docs/app src/index.ts ",
         "docs:clean": "node ./scripts/docsFindAndReplace.js ; node ./scripts/docsCleanup.js"
     },
-    "peerDependencies": {},
+    "peerDependencies": {
+        "lodash.pickby": "^4.6.0"
+    },
     "dependencies": {
         "@pooltogether/contract-list-schema": "^0.1.4",
         "@types/lodash": "^4.14.195",
@@ -38,13 +40,14 @@
         "ethers-multicall-provider": "3.1.2",
         "graphql": "^16.6.0",
         "graphql-request": "^6.0.0",
-        "lodash": "^4.17.21",
+        "lodash.pickby": "^4.6.0",
         "node-fetch": "^3.3.2",
         "tsc": "^2.0.4",
         "tsc-watch": "^6.0.4",
         "typescript": "^5.0.4"
     },
     "devDependencies": {
+        "@types/lodash.pickby": "^4.6.9",
         "@types/node": "^20.2.5",
         "debug": "^4.3.2",
         "prettier": "^2.8.8",
