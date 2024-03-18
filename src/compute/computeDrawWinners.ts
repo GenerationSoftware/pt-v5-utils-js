@@ -30,7 +30,11 @@ export async function computeDrawWinners(
   }
 
   // #3. Page through and concat all accounts for all vaults
-  vaults = await populateSubgraphPrizeVaultAccounts(chainId, vaults);
+  vaults = await populateSubgraphPrizeVaultAccounts(
+    chainId,
+    vaults,
+    prizePoolInfo.lastDrawClosedAt,
+  );
 
   // #4. Determine winners for last draw
   let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);

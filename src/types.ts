@@ -84,6 +84,7 @@ export interface PrizePoolInfo {
   isDrawFinalized: boolean; // cannot claim for a draw that has been finalized
   numTiers: number;
   numPrizeIndices: number;
+  lastDrawClosedAt: number;
   reserve: string;
   tiersRangeArray: number[]; // an easily iterable range of numbers for each tier available (ie. [0, 1, 2])
   tierPrizeData: {

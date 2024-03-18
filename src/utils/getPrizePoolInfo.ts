@@ -19,6 +19,7 @@ export const getPrizePoolInfo = async (
     drawId: -1,
     numPrizeIndices: -1,
     numTiers: -1,
+    lastDrawClosedAt: -1,
     reserve: '',
     tiersRangeArray: [],
     tierPrizeData: {},
@@ -38,6 +39,7 @@ export const getPrizePoolInfo = async (
   // Draw ID
   prizePoolInfo.drawId = await prizePoolContract.getLastAwardedDrawId();
   prizePoolInfo.isDrawFinalized = await prizePoolContract.isDrawFinalized(prizePoolInfo.drawId);
+  prizePoolInfo.lastDrawClosedAt = await prizePoolContract.drawClosesAt(prizePoolInfo.drawId);
 
   // Number of Tiers
   prizePoolInfo.numTiers = await prizePoolContract.numberOfTiers();
