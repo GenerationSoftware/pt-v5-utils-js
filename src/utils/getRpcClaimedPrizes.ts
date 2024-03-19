@@ -7,6 +7,7 @@ import { findPrizePoolInContracts } from '../utils/index.js';
 import { getEthersMulticallProviderResults } from './multicall.js';
 
 const { MulticallWrapper } = ethersMulticallProviderPkg;
+
 /**
  * Pulls from the contract all of the claimed prizes for the previous draw
  *
