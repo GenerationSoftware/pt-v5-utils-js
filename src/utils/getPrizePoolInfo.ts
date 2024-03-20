@@ -1,11 +1,11 @@
 import { ethers, BigNumber } from 'ethers';
 import { Provider } from '@ethersproject/providers';
-import ethersMulticallProviderPkg from 'ethers-multicall-provider';
 
 import { ContractsBlob, PrizePoolInfo, TierPrizeData } from '../types.js';
 import { findPrizePoolInContracts } from '../utils/index.js';
 import { getEthersMulticallProviderResults } from './multicall.js';
 
+import ethersMulticallProviderPkg from 'ethers-multicall-provider';
 const { MulticallWrapper } = ethersMulticallProviderPkg;
 
 const KEYS = {

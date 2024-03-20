@@ -34,12 +34,15 @@
         "lodash.pickby": "^4.6.0"
     },
     "dependencies": {
+        "@ethersproject/abi": "5.7.0",
+        "@ethersproject/providers": "5.7.2",
         "@pooltogether/contract-list-schema": "^0.1.4",
         "@types/lodash": "^4.14.195",
         "ethers": "^5.5.1",
         "ethers-multicall-provider": "3.1.2",
         "graphql": "^16.6.0",
         "graphql-request": "^6.0.0",
+        "lodash": "4.17.0",
         "lodash.pickby": "^4.6.0",
         "node-fetch": "^3.3.2",
         "tsc": "^2.0.4",
