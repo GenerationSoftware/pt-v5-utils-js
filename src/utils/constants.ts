@@ -1,9 +1,7 @@
 export const CHAIN_IDS: Record<string, number> = {
   mainnet: 1,
   optimism: 10,
-  optimismGoerli: 420,
   arbitrum: 42161,
-  arbitrumGoerli: 421613,
   arbitrumSepolia: 421614,
   sepolia: 11155111,
   optimismSepolia: 11155420,
@@ -11,19 +9,16 @@ export const CHAIN_IDS: Record<string, number> = {
 
 export const CONTRACTS_STORE: Record<string, string> = {
   [CHAIN_IDS.mainnet]: '',
-  [CHAIN_IDS.optimism]: '',
+  [CHAIN_IDS.optimism]:
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-mainnet/d025f4d37bb536ad083bcc4de1ac4d3c84523b48/deployments/optimism/contracts.json', // v50, will be updated to v51 soon!
   [CHAIN_IDS.sepolia]: '',
-  [CHAIN_IDS.optimismGoerli]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/21c33e351b51aa43689fff6847d48333090aecb0/deployments/optimismGoerli/contracts.json',
   [CHAIN_IDS.optimismSepolia]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/e75ac4556752f24eac0966f052e8cfe63945dcbf/deployments/optimismSepolia/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/d025f4d37bb536ad083bcc4de1ac4d3c84523b48/deployments/optimismSepolia/contracts.json',
 };
 
 export const SUBGRAPH_URIS: Record<string, string> = {
   [CHAIN_IDS.optimism]: '', // ?source=pooltogether
   [CHAIN_IDS.sepolia]: '',
-  [CHAIN_IDS.optimismGoerli]:
-    'https://api.studio.thegraph.com/query/63100/pt-v5-op-goerli-new/v0.0.7',
   [CHAIN_IDS.optimismSepolia]:
     'https://api.studio.thegraph.com/query/63100/pt-v5-op-sepolia/version/latest',
 };
