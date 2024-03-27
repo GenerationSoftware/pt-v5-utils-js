@@ -13,7 +13,7 @@ export const CONTRACTS_STORE: Record<string, string> = {
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-mainnet/d025f4d37bb536ad083bcc4de1ac4d3c84523b48/deployments/optimism/contracts.json', // v50, will be updated to v51 soon!
   [CHAIN_IDS.sepolia]: '',
   [CHAIN_IDS.optimismSepolia]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/d025f4d37bb536ad083bcc4de1ac4d3c84523b48/deployments/optimismSepolia/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/c2d8899c22b96cfb606d7a54454f285e78d3170f/deployments/optimismSepolia/contracts.json',
 };
 
 export const SUBGRAPH_URIS: Record<string, string> = {
