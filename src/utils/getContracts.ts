@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 
-import { ContractData, ContractsBlob } from '../types';
+import { ContractData, ContractsBlob } from '../types.js';
 
 // Returns all the contracts that match the params by name, chain, and contract version
 export function getContracts(

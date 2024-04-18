@@ -1,12 +1,12 @@
 {
     "name": "@generationsoftware/pt-v5-utils-js",
-    "description": "Utility library for PoolTogether v5 computations.",
+    "description": "Utility / helper library for PoolTogether v5.",
     "author": {
         "name": "G9 Software Inc.",
         "url": "https://github.com/generationsoftware"
     },
     "license": "MIT",
-    "version": "1.0.10",
+    "version": "1.1.0",
     "homepage": "https://github.com/generationsoftware/pt-v5-utils-js",
     "bugs": {
         "url": "https://github.com/generationsoftware/issues",
@@ -15,6 +15,7 @@
     "engines": {
         "node": ">=10"
     },
+    "type": "module",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [
@@ -29,21 +30,27 @@
         "docs:html": "yarn typedoc --plugin none --out docs/app src/index.ts ",
         "docs:clean": "node ./scripts/docsFindAndReplace.js ; node ./scripts/docsCleanup.js"
     },
-    "peerDependencies": {},
+    "peerDependencies": {
+        "lodash.pickby": "^4.6.0"
+    },
     "dependencies": {
+        "@ethersproject/abi": "5.7.0",
+        "@ethersproject/providers": "5.7.2",
         "@pooltogether/contract-list-schema": "^0.1.4",
         "@types/lodash": "^4.14.195",
         "ethers": "^5.5.1",
-        "ethers-multicall-provider": "^3.0.3",
+        "ethers-multicall-provider": "3.1.2",
         "graphql": "^16.6.0",
         "graphql-request": "^6.0.0",
-        "lodash": "^4.17.21",
-        "node-fetch": "^2.6.11",
+        "lodash": "4.17.0",
+        "lodash.pickby": "^4.6.0",
+        "node-fetch": "^3.3.2",
         "tsc": "^2.0.4",
         "tsc-watch": "^6.0.4",
         "typescript": "^5.0.4"
     },
     "devDependencies": {
+        "@types/lodash.pickby": "^4.6.9",
         "@types/node": "^20.2.5",
         "debug": "^4.3.2",
         "prettier": "^2.8.8",

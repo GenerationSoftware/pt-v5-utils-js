@@ -1,7 +1,7 @@
 import { Provider } from '@ethersproject/providers';
 
-import { getRpcClaimedPrizes } from '../utils/getRpcClaimedPrizes';
-import { ContractsBlob, Claim } from '../types';
+import { getRpcClaimedPrizes } from '../utils/getRpcClaimedPrizes.js';
+import { ContractsBlob, Claim } from '../types.js';
 
 export const flagClaimedRpc = async (
   readProvider: Provider,

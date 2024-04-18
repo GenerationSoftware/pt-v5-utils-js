@@ -1,10 +1,24 @@
 import { ethers, BigNumber } from 'ethers';
 import { Provider } from '@ethersproject/providers';
 
-import { ContractsBlob, PrizePoolInfo, TierPrizeData } from '../types';
-import { findPrizePoolInContracts } from '../utils';
+import { ContractsBlob, PrizePoolInfo, TierPrizeData } from '../types.js';
+import { findPrizePoolInContracts } from '../utils/index.js';
+import { getEthersMulticallProviderResults } from './multicall.js';
 
-// OPTIMIZE: Could use multicall reads here
+import ethersMulticallProviderPkg from 'ethers-multicall-provider';
+const { MulticallWrapper } = ethersMulticallProviderPkg;
+
+const KEYS = {
+  isDrawFinalized: 'isDrawFinalized',
+  lastDrawClosedAt: 'lastDrawClosedAt',
+  numTiers: 'numTiers',
+  reserve: 'reserve',
+} as const;
+
+const tierPrizeCountKey = (tierNum: number) => `tier-${tierNum}-getTierPrizeCount`;
+const tierAmountKey = (tierNum: number) => `tier-${tierNum}-amount`;
+const tierLiquidityKey = (tierNum: number) => `tier-${tierNum}-liquidity`;
+
 /**
  * Gather information about the given prize pool's previous drawId and tiers
  * @param readProvider a read-capable provider for the chain that should be queried
@@ -15,10 +29,11 @@ export const getPrizePoolInfo = async (
   readProvider: Provider,
   contracts: ContractsBlob,
 ): Promise<PrizePoolInfo> => {
-  const prizePoolInfo: PrizePoolInfo = {
+  let prizePoolInfo: PrizePoolInfo = {
     drawId: -1,
     numPrizeIndices: -1,
     numTiers: -1,
+    lastDrawClosedAt: -1,
     reserve: '',
     tiersRangeArray: [],
     tierPrizeData: {},
@@ -29,27 +44,53 @@ export const getPrizePoolInfo = async (
   const prizePoolAddress: string | undefined = prizePoolContractBlob?.address;
 
   // @ts-ignore Provider == BaseProvider
+  const multicallProvider = MulticallWrapper.wrap(readProvider);
+
+  // @ts-ignore Provider == BaseProvider
   const prizePoolContract = new ethers.Contract(
     prizePoolAddress,
     prizePoolContractBlob.abi,
-    readProvider,
+    multicallProvider,
   );
+
+  let queriesOne: Record<string, any> = {};
 
   // Draw ID
   prizePoolInfo.drawId = await prizePoolContract.getLastAwardedDrawId();
-  prizePoolInfo.isDrawFinalized = await prizePoolContract.isDrawFinalized(prizePoolInfo.drawId);
+
+  queriesOne[KEYS.isDrawFinalized] = prizePoolContract.isDrawFinalized(prizePoolInfo.drawId);
+  queriesOne[KEYS.lastDrawClosedAt] = prizePoolContract.drawClosesAt(prizePoolInfo.drawId);
 
   // Number of Tiers
-  prizePoolInfo.numTiers = await prizePoolContract.numberOfTiers();
+  queriesOne[KEYS.numTiers] = prizePoolContract.numberOfTiers();
 
   // Prize Pool Reserve
-  prizePoolInfo.reserve = (await prizePoolContract.reserve()).toString();
+  queriesOne[KEYS.reserve] = prizePoolContract.reserve();
+
+  const resultsOne = await getEthersMulticallProviderResults(multicallProvider, queriesOne);
+
+  prizePoolInfo.isDrawFinalized = resultsOne[KEYS.isDrawFinalized];
+  prizePoolInfo.lastDrawClosedAt = resultsOne[KEYS.lastDrawClosedAt];
+  prizePoolInfo.numTiers = resultsOne[KEYS.numTiers];
+  prizePoolInfo.reserve = resultsOne[KEYS.reserve].toString();
 
   // Tiers Range Array
   const tiersRangeArray = Array.from({ length: prizePoolInfo.numTiers }, (value, index) => index);
   prizePoolInfo.tiersRangeArray = tiersRangeArray;
 
-  // Tier Data
+  let queriesTwo: Record<string, any> = {};
+
+  // Tier Data Queries
+  for (let tierNum = 0; tierNum < prizePoolInfo.numTiers; tierNum++) {
+    queriesTwo[tierPrizeCountKey(tierNum)] =
+      prizePoolContract.functions['getTierPrizeCount(uint8)'](tierNum);
+    queriesTwo[tierAmountKey(tierNum)] = prizePoolContract.getTierPrizeSize(tierNum);
+    queriesTwo[tierLiquidityKey(tierNum)] = prizePoolContract.getTierRemainingLiquidity(tierNum);
+  }
+
+  const resultsTwo = await getEthersMulticallProviderResults(multicallProvider, queriesTwo);
+
+  // Tier Data Results
   for (let tierNum = 0; tierNum < prizePoolInfo.numTiers; tierNum++) {
     const tier: TierPrizeData = (prizePoolInfo.tierPrizeData[tierNum.toString()] = {
       prizeIndicesCount: -1,
@@ -58,17 +99,16 @@ export const getPrizePoolInfo = async (
       liquidity: BigNumber.from(0),
     });
 
-    const prizeCount = await prizePoolContract.functions['getTierPrizeCount(uint8)'](tierNum);
-    tier.prizeIndicesCount = prizeCount[0];
+    tier.prizeIndicesCount = resultsTwo[`tier-${tierNum}-getTierPrizeCount`][0];
 
     // Prize Indices Range Array
     tier.prizeIndicesRangeArray = buildPrizeIndicesRangeArray(tier);
 
     // Prize Amount
-    tier.amount = await prizePoolContract.getTierPrizeSize(tierNum);
+    tier.amount = resultsTwo[`tier-${tierNum}-amount`];
 
     // Prize Liquidity
-    tier.liquidity = await prizePoolContract.getTierRemainingLiquidity(tierNum);
+    tier.liquidity = resultsTwo[`tier-${tierNum}-liquidity`];
   }
 
   prizePoolInfo.numPrizeIndices = Object.values(prizePoolInfo.tierPrizeData).reduce(

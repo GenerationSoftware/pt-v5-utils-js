@@ -1,10 +1,12 @@
 import { ethers } from 'ethers';
 import { Provider } from '@ethersproject/providers';
-import { MulticallWrapper } from 'ethers-multicall-provider';
+import ethersMulticallProviderPkg from 'ethers-multicall-provider';
 
-import { Claim, ContractsBlob } from '../types';
-import { findPrizePoolInContracts } from '../utils';
-import { getEthersMulticallProviderResults } from './multicall';
+import { Claim, ContractsBlob } from '../types.js';
+import { findPrizePoolInContracts } from '../utils/index.js';
+import { getEthersMulticallProviderResults } from './multicall.js';
+
+const { MulticallWrapper } = ethersMulticallProviderPkg;
 
 /**
  * Pulls from the contract all of the claimed prizes for the previous draw

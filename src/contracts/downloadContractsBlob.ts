@@ -1,7 +1,7 @@
-import { ContractsBlob } from '../types';
-import { CONTRACTS_STORE } from '../utils/constants';
+import nodeFetch from 'node-fetch';
 
-const nodeFetch = require('node-fetch');
+import { ContractsBlob } from '../types.js';
+import { CONTRACTS_STORE } from '../utils/constants.js';
 
 /**
  * Downloads the latest contracts blob from the raw data source on GitHub

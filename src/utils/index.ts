@@ -1,15 +1,15 @@
-export * from './constants';
+export * from './constants.js';
 
-export * from './getContract';
-export * from './getContracts';
-export * from './getPrizePoolInfo';
-export * from './getWinnersClaims';
-export * from './getSubgraphVaults';
+export * from './getContract.js';
+export * from './getContracts.js';
+export * from './getPrizePoolInfo.js';
+export * from './getWinnersClaims.js';
+export * from './getSubgraphPrizeVaults.js';
 
-export * from './getSubgraphClaimedPrizes';
-export * from './flagClaimedSubgraph';
+export * from './getSubgraphClaimedPrizes.js';
+export * from './flagClaimedSubgraph.js';
 
-export * from './getRpcClaimedPrizes';
-export * from './flagClaimedRpc';
+export * from './getRpcClaimedPrizes.js';
+export * from './flagClaimedRpc.js';
 
-export * from './multicall';
+export * from './multicall.js';

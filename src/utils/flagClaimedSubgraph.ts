@@ -1,5 +1,5 @@
-import { getSubgraphClaimedPrizes } from './getSubgraphClaimedPrizes';
-import { ClaimedPrize, Claim, PrizePoolInfo } from '../types';
+import { getSubgraphClaimedPrizes } from './getSubgraphClaimedPrizes.js';
+import { ClaimedPrize, Claim, PrizePoolInfo } from '../types.js';
 
 export const flagClaimedSubgraph = async (
   chainId: number,

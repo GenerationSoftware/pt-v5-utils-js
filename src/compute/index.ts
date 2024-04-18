@@ -1,1 +1,1 @@
-export { computeDrawWinners } from './computeDrawWinners';
+export { computeDrawWinners } from './computeDrawWinners.js';
