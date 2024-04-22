@@ -29,17 +29,27 @@ export async function computeDrawWinners(
     throw new Error('Claimer: No vaults found in subgraph');
   }
 
-  // #3. Page through and concat all accounts for all vaults
+  // #3. Figure out the longest duration (in seconds) that the biggest tier (grandPrize tier) spans
+  const maxTierPeriodSeconds =
+    prizePoolInfo.drawPeriodSeconds * prizePoolInfo.grandPrizePeriodDraws;
+
+  // #4. Get a range of the oldest timestamp we want to start querying at to the current closed draw timestmap
+  // for use in scoping depositors when querying the Graph
+  const afterTimestamp = prizePoolInfo.lastDrawClosedAt - maxTierPeriodSeconds;
+  const beforeTimestamp = prizePoolInfo.lastDrawClosedAt;
+
+  // #5. Page through and concat all accounts for all vaults
   vaults = await populateSubgraphPrizeVaultAccounts(
     chainId,
     vaults,
-    prizePoolInfo.lastDrawClosedAt,
+    afterTimestamp,
+    beforeTimestamp,
   );
 
-  // #4. Determine winners for last draw
+  // #6. Determine winners for last draw
   let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);
 
-  // #5. Cross-reference prizes claimed subgraph to flag if a claim has been claimed or not
+  // #7. Cross-reference prizes claimed subgraph to flag if a claim has been claimed or not
   claims = await flagClaimedRpc(readProvider, contracts, claims);
 
   return claims;

@@ -26,16 +26,16 @@ export const getSubgraphPrizeVaults = async (chainId: number): Promise<PrizeVaul
 
 /**
  * Pulls from the subgraph all of the accounts associated with the provided prize vaults
- *
+ * @param chainId chainId as number
+ * @param prizeVaults array of PrizeVault objects to populate
+ * @param afterTimestamp (optional) the timestamp to query for depositors after
+ * @param beforeTimestamp (optional) the timestamp to query for depositors before
  * @returns {Promise} Promise of an array of Vault objects
  */
-
-// For beforeTimestamp don't use milliseconds!
-// ie. 1710450345 or 1710457517, but not 1710457517000
-//
 export const populateSubgraphPrizeVaultAccounts = async (
   chainId: number,
   prizeVaults: PrizeVault[],
+  afterTimestamp?: number,
   beforeTimestamp?: number,
 ): Promise<PrizeVault[]> => {
   const client = getSubgraphClient(chainId);
@@ -46,8 +46,12 @@ export const populateSubgraphPrizeVaultAccounts = async (
 
     let query = prizeVaultAccountsQuery();
 
-    if (!!beforeTimestamp) {
+    if (!!afterTimestamp && !!beforeTimestamp) {
       query = prizeVaultAccountsIncludingBalanceBeforeTimestampQuery();
+    } else if (!!afterTimestamp || !!beforeTimestamp) {
+      throw new Error(
+        `Both the 'afterTimestamp' and the 'beforeTimestamp' need to be included or left blank`,
+      );
     }
 
     if (!prizeVault.accounts) {
@@ -62,7 +66,14 @@ export const populateSubgraphPrizeVaultAccounts = async (
         lastId,
       };
 
-      if (!!beforeTimestamp) {
+      // Note: For beforeTimestamp don't use milliseconds!
+      // ie. 1710450345 or 1710457517, but not 1710457517000
+      if (!!afterTimestamp && !!beforeTimestamp) {
+        if (afterTimestamp > beforeTimestamp) {
+          throw new Error(`'afterTimestamp' cannot be greater than the 'beforeTimestamp'`);
+        }
+
+        variables.afterTimestamp = afterTimestamp;
         variables.beforeTimestamp = beforeTimestamp;
       }
 
@@ -73,9 +84,12 @@ export const populateSubgraphPrizeVaultAccounts = async (
       });
       const accounts = accountsResponse?.accounts || [];
 
-      if (!!beforeTimestamp) {
+      if (!!afterTimestamp && !!beforeTimestamp) {
         const accountsWithBalance = accounts.filter((account: any) => {
-          return account.balanceUpdatesBeforeTimestamp?.[0]?.delegateBalance > Number(0);
+          return (
+            account.balanceUpdatesAfterTimestamp?.[0]?.delegateBalance > Number(0) ||
+            account.balanceUpdatesBeforeTimestamp?.[0]?.delegateBalance > Number(0)
+          );
         });
 
         prizeVault.accounts = prizeVault.accounts.concat(accountsWithBalance);
@@ -124,6 +138,7 @@ const prizeVaultAccountsIncludingBalanceBeforeTimestampQuery = () => {
       $first: Int!
       $lastId: String
       $prizeVaultAddress: String!
+      $afterTimestamp: Int!
       $beforeTimestamp: Int!
     ) {
       accounts(first: $first, where: { id_gt: $lastId, prizeVault_: { id: $prizeVaultAddress } }) {
@@ -132,6 +147,14 @@ const prizeVaultAccountsIncludingBalanceBeforeTimestampQuery = () => {
           address
         }
 
+        balanceUpdatesAfterTimestamp: balanceUpdates(
+          orderBy: timestamp
+          orderDirection: desc
+          first: 1
+          where: { timestamp_gte: $afterTimestamp }
+        ) {
+          delegateBalance
+        }
         balanceUpdatesBeforeTimestamp: balanceUpdates(
           orderBy: timestamp
           orderDirection: desc

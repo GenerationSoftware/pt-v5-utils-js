@@ -9,6 +9,8 @@ import ethersMulticallProviderPkg from 'ethers-multicall-provider';
 const { MulticallWrapper } = ethersMulticallProviderPkg;
 
 const KEYS = {
+  drawPeriodSeconds: 'drawPeriodSeconds',
+  grandPrizePeriodDraws: 'grandPrizePeriodDraws',
   isDrawFinalized: 'isDrawFinalized',
   lastDrawClosedAt: 'lastDrawClosedAt',
   numTiers: 'numTiers',
@@ -31,6 +33,8 @@ export const getPrizePoolInfo = async (
 ): Promise<PrizePoolInfo> => {
   let prizePoolInfo: PrizePoolInfo = {
     drawId: -1,
+    drawPeriodSeconds: -1,
+    grandPrizePeriodDraws: -1,
     numPrizeIndices: -1,
     numTiers: -1,
     lastDrawClosedAt: -1,
@@ -61,6 +65,12 @@ export const getPrizePoolInfo = async (
   queriesOne[KEYS.isDrawFinalized] = prizePoolContract.isDrawFinalized(prizePoolInfo.drawId);
   queriesOne[KEYS.lastDrawClosedAt] = prizePoolContract.drawClosesAt(prizePoolInfo.drawId);
 
+  // Draw Period in Seconds
+  queriesOne[KEYS.drawPeriodSeconds] = prizePoolContract.drawPeriodSeconds();
+
+  // Max # of Periods between Grand Prizes
+  queriesOne[KEYS.grandPrizePeriodDraws] = prizePoolContract.grandPrizePeriodDraws();
+
   // Number of Tiers
   queriesOne[KEYS.numTiers] = prizePoolContract.numberOfTiers();
 
@@ -71,6 +81,8 @@ export const getPrizePoolInfo = async (
 
   prizePoolInfo.isDrawFinalized = resultsOne[KEYS.isDrawFinalized];
   prizePoolInfo.lastDrawClosedAt = resultsOne[KEYS.lastDrawClosedAt];
+  prizePoolInfo.drawPeriodSeconds = resultsOne[KEYS.drawPeriodSeconds];
+  prizePoolInfo.grandPrizePeriodDraws = resultsOne[KEYS.grandPrizePeriodDraws];
   prizePoolInfo.numTiers = resultsOne[KEYS.numTiers];
   prizePoolInfo.reserve = resultsOne[KEYS.reserve].toString();
 
