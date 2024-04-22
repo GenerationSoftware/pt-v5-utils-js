@@ -35,16 +35,11 @@ export async function computeDrawWinners(
 
   // #4. Get a range of the oldest timestamp we want to start querying at to the current closed draw timestmap
   // for use in scoping depositors when querying the Graph
-  const afterTimestamp = prizePoolInfo.lastDrawClosedAt - maxTierPeriodSeconds;
-  const beforeTimestamp = prizePoolInfo.lastDrawClosedAt;
+  const startTimestamp = prizePoolInfo.lastDrawClosedAt - maxTierPeriodSeconds;
+  const endTimestamp = prizePoolInfo.lastDrawClosedAt;
 
   // #5. Page through and concat all accounts for all vaults
-  vaults = await populateSubgraphPrizeVaultAccounts(
-    chainId,
-    vaults,
-    afterTimestamp,
-    beforeTimestamp,
-  );
+  vaults = await populateSubgraphPrizeVaultAccounts(chainId, vaults, startTimestamp, endTimestamp);
 
   // #6. Determine winners for last draw
   let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);

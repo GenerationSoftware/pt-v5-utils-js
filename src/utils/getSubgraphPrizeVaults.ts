@@ -28,15 +28,15 @@ export const getSubgraphPrizeVaults = async (chainId: number): Promise<PrizeVaul
  * Pulls from the subgraph all of the accounts associated with the provided prize vaults
  * @param chainId chainId as number
  * @param prizeVaults array of PrizeVault objects to populate
- * @param afterTimestamp (optional) the timestamp to query for depositors after
- * @param beforeTimestamp (optional) the timestamp to query for depositors before
+ * @param startTimestamp (optional) the timestamp to query for depositors after
+ * @param endTimestamp (optional) the timestamp to query for depositors before
  * @returns {Promise} Promise of an array of Vault objects
  */
 export const populateSubgraphPrizeVaultAccounts = async (
   chainId: number,
   prizeVaults: PrizeVault[],
-  afterTimestamp?: number,
-  beforeTimestamp?: number,
+  startTimestamp?: number,
+  endTimestamp?: number,
 ): Promise<PrizeVault[]> => {
   const client = getSubgraphClient(chainId);
 
@@ -46,11 +46,11 @@ export const populateSubgraphPrizeVaultAccounts = async (
 
     let query = prizeVaultAccountsQuery();
 
-    if (!!afterTimestamp && !!beforeTimestamp) {
-      query = prizeVaultAccountsIncludingBalanceBeforeTimestampQuery();
-    } else if (!!afterTimestamp || !!beforeTimestamp) {
+    if (!!startTimestamp && !!endTimestamp) {
+      query = prizeVaultAccountsIncludingBalanceUpdatesQuery();
+    } else if (!!startTimestamp || !!endTimestamp) {
       throw new Error(
-        `Both the 'afterTimestamp' and the 'beforeTimestamp' need to be included or left blank`,
+        `Both the 'startTimestamp' and the 'endTimestamp' need to be included or left blank`,
       );
     }
 
@@ -66,15 +66,15 @@ export const populateSubgraphPrizeVaultAccounts = async (
         lastId,
       };
 
-      // Note: For beforeTimestamp don't use milliseconds!
+      // Note: For endTimestamp don't use milliseconds!
       // ie. 1710450345 or 1710457517, but not 1710457517000
-      if (!!afterTimestamp && !!beforeTimestamp) {
-        if (afterTimestamp > beforeTimestamp) {
-          throw new Error(`'afterTimestamp' cannot be greater than the 'beforeTimestamp'`);
+      if (!!startTimestamp && !!endTimestamp) {
+        if (startTimestamp > endTimestamp) {
+          throw new Error(`'startTimestamp' cannot be greater than the 'endTimestamp'`);
         }
 
-        variables.afterTimestamp = afterTimestamp;
-        variables.beforeTimestamp = beforeTimestamp;
+        variables.startTimestamp = startTimestamp;
+        variables.endTimestamp = endTimestamp;
       }
 
       // @ts-ignore: ignore types from GraphQL client lib
@@ -84,13 +84,10 @@ export const populateSubgraphPrizeVaultAccounts = async (
       });
       const accounts = accountsResponse?.accounts || [];
 
-      if (!!afterTimestamp && !!beforeTimestamp) {
-        const accountsWithBalance = accounts.filter((account: any) => {
-          return (
-            account.balanceUpdatesAfterTimestamp?.[0]?.delegateBalance > Number(0) ||
-            account.balanceUpdatesBeforeTimestamp?.[0]?.delegateBalance > Number(0)
-          );
-        });
+      if (!!startTimestamp && !!endTimestamp) {
+        const accountsWithBalance = filterAccountsWithBalance(accounts);
+        console.log('accountsWithBalance');
+        console.log(accountsWithBalance);
 
         prizeVault.accounts = prizeVault.accounts.concat(accountsWithBalance);
       } else {
@@ -107,6 +104,21 @@ export const populateSubgraphPrizeVaultAccounts = async (
   }
 
   return prizeVaults;
+};
+
+const filterAccountsWithBalance = (accounts: any[]) => {
+  return accounts.filter((account: any) => {
+    const balanceUpdatesAboveZeroDuringRange = account.balanceUpdatesBetweenMaxDrawPeriod.filter(
+      (update: any) => {
+        return update.delegateBalance > 0;
+      },
+    );
+
+    return (
+      account.mostRecentBalanceUpdateBeforeTimestamp?.[0]?.delegateBalance > 0 ||
+      balanceUpdatesAboveZeroDuringRange.length > 0
+    );
+  });
 };
 
 const prizeVaultsQuery = () => {
@@ -132,34 +144,33 @@ const prizeVaultAccountsQuery = () => {
   `;
 };
 
-const prizeVaultAccountsIncludingBalanceBeforeTimestampQuery = () => {
+const prizeVaultAccountsIncludingBalanceUpdatesQuery = () => {
   return gql`
     query drawQuery(
       $first: Int!
       $lastId: String
       $prizeVaultAddress: String!
-      $afterTimestamp: Int!
-      $beforeTimestamp: Int!
+      $startTimestamp: Int!
+      $endTimestamp: Int!
     ) {
       accounts(first: $first, where: { id_gt: $lastId, prizeVault_: { id: $prizeVaultAddress } }) {
         id
         user {
           address
         }
+        delegateBalance
 
-        balanceUpdatesAfterTimestamp: balanceUpdates(
+        mostRecentBalanceUpdateBeforeTimestamp: balanceUpdates(
           orderBy: timestamp
           orderDirection: desc
           first: 1
-          where: { timestamp_gte: $afterTimestamp }
+          where: { timestamp_lte: $startTimestamp }
         ) {
           delegateBalance
         }
-        balanceUpdatesBeforeTimestamp: balanceUpdates(
-          orderBy: timestamp
-          orderDirection: desc
-          first: 1
-          where: { timestamp_lte: $beforeTimestamp }
+
+        balanceUpdatesBetweenMaxDrawPeriod: balanceUpdates(
+          where: { timestamp_gte: $startTimestamp, timestamp_lte: $endTimestamp }
         ) {
           delegateBalance
         }
