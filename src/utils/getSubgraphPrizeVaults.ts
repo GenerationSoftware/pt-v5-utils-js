@@ -86,8 +86,6 @@ export const populateSubgraphPrizeVaultAccounts = async (
 
       if (!!startTimestamp && !!endTimestamp) {
         const accountsWithBalance = filterAccountsWithBalance(accounts);
-        console.log('accountsWithBalance');
-        console.log(accountsWithBalance);
 
         prizeVault.accounts = prizeVault.accounts.concat(accountsWithBalance);
       } else {
