@@ -14,7 +14,7 @@ export const CONTRACTS_STORE: Record<string, string> = {
   [CHAIN_IDS.optimismSepolia]:
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/993c1f75b8b19826195f44c197be6928a213863d/deployments/optimismSepolia/contracts.json',
   [CHAIN_IDS.baseSepolia]:
-    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/fe26460a82048f8b0234efcad6c9dc82901890db/deployments/optimismSepolia/contracts.json',
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/fe26460a82048f8b0234efcad6c9dc82901890db/deployments/baseSepolia/contracts.json',
 };
 
 export const SUBGRAPH_URIS: Record<string, string> = {
