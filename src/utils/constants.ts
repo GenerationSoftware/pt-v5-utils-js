@@ -2,6 +2,7 @@ export const CHAIN_IDS: Record<string, number> = {
   mainnet: 1,
   optimism: 10,
   arbitrum: 42161,
+  baseSepolia: 84532,
   arbitrumSepolia: 421614,
   sepolia: 11155111,
   optimismSepolia: 11155420,
