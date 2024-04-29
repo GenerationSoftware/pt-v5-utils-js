@@ -50,6 +50,13 @@ Currently supports:
 
 - Ethereum
 - Optimism
+- Base
+- Arbitrum
+
+- Sepolia
+- Optimism Sepolia
+- Base Sepolia
+- Arbitrum Sepolia
 
 ```ts
 import { downloadContractsBlob } from "@generationsoftware/v5-utils-js";
