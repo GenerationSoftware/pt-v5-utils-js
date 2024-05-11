@@ -15,6 +15,8 @@ export const CONTRACTS_STORE: Record<string, string> = {
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/993c1f75b8b19826195f44c197be6928a213863d/deployments/optimismSepolia/contracts.json',
   [CHAIN_IDS.baseSepolia]:
     'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/fe26460a82048f8b0234efcad6c9dc82901890db/deployments/baseSepolia/contracts.json',
+  [CHAIN_IDS.arbitrumSepolia]:
+    'https://raw.githubusercontent.com/GenerationSoftware/pt-v5-testnet/f21ae7e34e7e3117769493dc4f218aff91f2f752/deployments/arbitrumSepolia/contracts.json'
 };
 
 export const SUBGRAPH_URIS: Record<string, string> = {
@@ -24,4 +26,6 @@ export const SUBGRAPH_URIS: Record<string, string> = {
     'https://api.studio.thegraph.com/query/63100/pt-v5-op-sepolia/version/latest',
   [CHAIN_IDS.baseSepolia]:
     'https://api.studio.thegraph.com/query/63100/pt-v5-base-sepolia/version/latest',
+  [CHAIN_IDS.arbitrumSepolia]:
+    'https://api.studio.thegraph.com/query/41211/pt-v5-arbitrum-sepolia/version/latest'
 };
