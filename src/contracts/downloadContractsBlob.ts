@@ -1,15 +1,16 @@
 import nodeFetch from 'node-fetch';
 
 import { ContractsBlob } from '../types.js';
-import { CONTRACTS_STORE } from '../utils/constants.js';
 
 /**
- * Downloads the latest contracts blob from the raw data source on GitHub
- * @param {number} chainId
+ * Downloads the latest contracts blob from the raw data source URL provided
+ *
+ * @param {contractJsonUrl} string
+ *
  * @returns {ContractsBlob} contracts
  */
 export const downloadContractsBlob = async (
-  chainId: number,
+  contractJsonUrl: string,
   fetch?: any,
 ): Promise<ContractsBlob> => {
   let contracts;
@@ -19,7 +20,7 @@ export const downloadContractsBlob = async (
   }
 
   try {
-    const response = await fetch(CONTRACTS_STORE[chainId.toString()]);
+    const response = await fetch(contractJsonUrl);
     if (!response.ok) {
       throw new Error(response.statusText);
     }

@@ -18,13 +18,13 @@ import { ContractsBlob, Claim, PrizePoolInfo } from '../types.js';
 export async function computeDrawWinners(
   readProvider: Provider,
   contracts: ContractsBlob,
-  chainId: number,
+  subgraphUrl: string,
 ): Promise<Claim[]> {
   // #1. Collect prize pool info
   const prizePoolInfo: PrizePoolInfo = await getPrizePoolInfo(readProvider, contracts);
 
   // #2. Collect all vaults
-  let vaults = await getSubgraphPrizeVaults(chainId);
+  let vaults = await getSubgraphPrizeVaults(subgraphUrl);
   if (vaults.length === 0) {
     throw new Error('Claimer: No vaults found in subgraph');
   }
@@ -39,7 +39,12 @@ export async function computeDrawWinners(
   const endTimestamp = prizePoolInfo.lastDrawClosedAt;
 
   // #5. Page through and concat all accounts for all vaults
-  vaults = await populateSubgraphPrizeVaultAccounts(chainId, vaults, startTimestamp, endTimestamp);
+  vaults = await populateSubgraphPrizeVaultAccounts(
+    subgraphUrl,
+    vaults,
+    startTimestamp,
+    endTimestamp,
+  );
 
   // #6. Determine winners for last draw
   let claims: Claim[] = await getWinnersClaims(readProvider, prizePoolInfo, contracts, vaults);

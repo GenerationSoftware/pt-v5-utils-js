@@ -42,35 +42,35 @@ git clone https://github.com/generationsoftware/v5-utils-js
 
 # 📄 Contracts Blob
 
-### `downloadContractsBlob(chainId)`
+### `downloadContractsBlob(contractJsonUrl)`
 
-Gets the list of contracts for a specific network.
-
-Currently supports:
-
-- Ethereum
-- Optimism
+Gets the list of contracts for a specific network. Typically this would be the URL of the raw JSON file on committed on GitHub.
 
 ```ts
 import { downloadContractsBlob } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
-  const contracts = await downloadContractsBlob(chainId);
+  const contracts = await downloadContractsBlob(contractJsonUrl);
 }
 runAsync();
 ```
 
 # 🏆 Draw Results
 
-### `computeDrawWinners(provider, contracts, chainId)`
+### `computeDrawWinners(provider, contracts, subgraphUrl)`
 
 A helper function that runs five intensive utility functions to compute and return a JSON blob of all previous draw winner's Claim objects for each tier of a prize pool, grouped by vault.
 
 ```ts
 import { computeDrawWinners } from "@generationsoftware/v5-utils-js";
 
-// Compute Winners for the last Draw
-const winners = computeDrawWinners(provider, contracts, chainId);
+async function runAsync() {
+  const subgraphUrl = "https://api.studio.thegraph.com/query/63100/pt-v5-optimism/version/latest";
+
+  // Compute Winners for the last Draw
+  const winners = await computeDrawWinners(provider, contracts, subgraphUrl);
+}
+runAsync();
 
 // Returns Claim[] array:
 //
@@ -122,7 +122,7 @@ runAsync();
 
 # 🏦 Get Subgraph Prize Vaults
 
-### `getSubgraphPrizeVaults(chainId)`
+### `getSubgraphPrizeVaults(subgraphUrl)`
 
 Collects all vaults from the PT v5 subgraph for a specific chain into an array.
 
@@ -130,9 +130,9 @@ Collects all vaults from the PT v5 subgraph for a specific chain into an array.
 import { getSubgraphPrizeVaults } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
-  const chainId = 11155420;
+  const subgraphUrl = "https://api.studio.thegraph.com/query/63100/pt-v5-optimism/version/latest";
 
-  const prizeVaults = await getSubgraphPrizeVaults(chainId);
+  const prizeVaults = await getSubgraphPrizeVaults(subgraphUrl);
 }
 runAsync();
 
@@ -146,7 +146,7 @@ runAsync();
 
 # 👥 Populate Subgraph Prize Vault Accounts
 
-### `populateSubgraphPrizeVaultAccounts(chainId, vaults)`
+### `populateSubgraphPrizeVaultAccounts(subgraphUrl, vaults)`
 
 Takes the prize vaults from `getSubgraphPrizeVaults` and adds user deposit account arrays for each. `populateSubgraphPrizeVaultAccounts` is split up into a separate call from `getSubgraphPrizeVaults` as it's very network heavy, needing to page through potentially hundreds of thousands of accounts from the subgraph.
 
@@ -154,11 +154,11 @@ Takes the prize vaults from `getSubgraphPrizeVaults` and adds user deposit accou
 import { populateSubgraphPrizeVaultAccounts } from "@generationsoftware/v5-utils-js";
 
 async function runAsync() {
-  let prizeVaults = await getSubgraphPrizeVaults(chainId);
+  const subgraphUrl = "https://api.studio.thegraph.com/query/63100/pt-v5-optimism/version/latest";
 
-  const chainId = 11155420;
+  let prizeVaults = await getSubgraphPrizeVaults(subgraphUrl);
 
-  prizeVaults = await populateSubgraphPrizeVaultAccounts(chainId, prizeVaults);
+  prizeVaults = await populateSubgraphPrizeVaultAccounts(subgraphUrl, prizeVaults);
 }
 runAsync();
 

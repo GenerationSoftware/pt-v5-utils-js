@@ -6,13 +6,16 @@ import { ClaimedPrize } from '../types.js';
 /**
  * Pulls from the subgraph all of the claimed prizes for a specific draw
  *
+ * @param {subgraphUrl} string API URL of the subgraph to use
+ * @param {drawId} number
+ *
  * @returns {Promise} Promise of an array of ClaimedPrize objects
  */
 export const getSubgraphClaimedPrizes = async (
-  chainId: number,
+  subgraphUrl: string,
   drawId: number,
 ): Promise<ClaimedPrize[]> => {
-  const client = getSubgraphClient(chainId);
+  const client = getSubgraphClient(subgraphUrl);
 
   const query = drawPrizeClaimsQuery();
   const variables = { id: drawId.toString() };

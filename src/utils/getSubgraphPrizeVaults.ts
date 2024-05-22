@@ -8,10 +8,12 @@ const GRAPH_QUERY_PAGE_SIZE = 1000;
 /**
  * Pulls from the subgraph all of the prize vaults
  *
+ * @param {subgraphUrl} string API URL of the subgraph to use
+ *
  * @returns {Promise} Promise of an array of PrizeVault objects
  */
-export const getSubgraphPrizeVaults = async (chainId: number): Promise<PrizeVault[]> => {
-  const client = getSubgraphClient(chainId);
+export const getSubgraphPrizeVaults = async (subgraphUrl: string): Promise<PrizeVault[]> => {
+  const client = getSubgraphClient(subgraphUrl);
 
   const query = prizeVaultsQuery();
 
@@ -26,19 +28,21 @@ export const getSubgraphPrizeVaults = async (chainId: number): Promise<PrizeVaul
 
 /**
  * Pulls from the subgraph all of the accounts associated with the provided prize vaults
- * @param chainId chainId as number
+ *
+ * @param subgraphUrl API URL of the subgraph to use
  * @param prizeVaults array of PrizeVault objects to populate
  * @param startTimestamp (optional) the timestamp to query for depositors after
  * @param endTimestamp (optional) the timestamp to query for depositors before
+ *
  * @returns {Promise} Promise of an array of Vault objects
  */
 export const populateSubgraphPrizeVaultAccounts = async (
-  chainId: number,
+  subgraphUrl: string,
   prizeVaults: PrizeVault[],
   startTimestamp?: number,
   endTimestamp?: number,
 ): Promise<PrizeVault[]> => {
-  const client = getSubgraphClient(chainId);
+  const client = getSubgraphClient(subgraphUrl);
 
   for (let i = 0; i < prizeVaults.length; i++) {
     const prizeVault = prizeVaults[i];

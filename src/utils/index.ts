@@ -1,5 +1,3 @@
-export * from './constants.js';
-
 export * from './getContract.js';
 export * from './getContracts.js';
 export * from './getPrizePoolInfo.js';

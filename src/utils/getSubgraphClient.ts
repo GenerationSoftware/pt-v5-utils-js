@@ -1,18 +1,15 @@
 import { GraphQLClient } from 'graphql-request';
 
-import { SUBGRAPH_URIS } from './constants.js';
-
 /**
- * Subgraphs to query for depositors
+ * Initializes and returns a GraphQLClient instance to work with set to
+ * the contractJsonUrl provided
+ *
+ * @param {contractJsonUrl} string
+ *
+ * @returns {GraphQLClient} GraphQLClient
  */
-export const getSubgraphUri = (chainId: number): string => {
-  return SUBGRAPH_URIS[chainId];
-};
-
-export const getSubgraphClient = (chainId: number, fetch?: any): GraphQLClient => {
-  const uri = getSubgraphUri(chainId);
-
-  return new GraphQLClient(uri, {
+export const getSubgraphClient = (subgraphUrl: string, fetch?: any): GraphQLClient => {
+  return new GraphQLClient(subgraphUrl, {
     fetch,
   });
 };
