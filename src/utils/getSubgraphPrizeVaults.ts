@@ -5,7 +5,7 @@ import { PrizeVault } from '../types.js';
 import { sToMs } from '../utils/math.js';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
-const SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_SECONDS = 5.1;
+const SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_SECONDS = 10.1;
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
