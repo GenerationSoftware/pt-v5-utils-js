@@ -4,6 +4,9 @@ import { getSubgraphClient } from './getSubgraphClient.js';
 import { PrizeVault } from '../types.js';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
+const SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_MILLISECONDS = 2100;
+
+const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 /**
  * Pulls from the subgraph all of the prize vaults
@@ -43,8 +46,11 @@ export const populateSubgraphPrizeVaultAccounts = async (
   endTimestamp?: number,
 ): Promise<PrizeVault[]> => {
   const client = getSubgraphClient(subgraphUrl);
+  console.log('Populating prize vault accounts, this can take a few minutes ...');
 
   for (let i = 0; i < prizeVaults.length; i++) {
+    await sleep(SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_MILLISECONDS);
+
     const prizeVault = prizeVaults[i];
     const prizeVaultAddress = prizeVault.id;
 
