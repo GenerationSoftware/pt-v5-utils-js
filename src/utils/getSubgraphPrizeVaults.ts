@@ -2,9 +2,10 @@ import { gql } from 'graphql-request';
 
 import { getSubgraphClient } from './getSubgraphClient.js';
 import { PrizeVault } from '../types.js';
+import { sToMs } from '../utils/math.js';
 
 const GRAPH_QUERY_PAGE_SIZE = 1000;
-const SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_MILLISECONDS = 2100;
+const SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_SECONDS = 5.1;
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
@@ -49,7 +50,7 @@ export const populateSubgraphPrizeVaultAccounts = async (
   console.log('Populating prize vault accounts, this can take a few minutes ...');
 
   for (let i = 0; i < prizeVaults.length; i++) {
-    await sleep(SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_MILLISECONDS);
+    await sleep(sToMs(SUBGRAPH_PAGINATION_RATE_LIMIT_DELAY_SECONDS));
 
     const prizeVault = prizeVaults[i];
     const prizeVaultAddress = prizeVault.id;

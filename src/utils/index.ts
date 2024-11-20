@@ -10,4 +10,5 @@ export * from './flagClaimedSubgraph.js';
 export * from './getRpcClaimedPrizes.js';
 export * from './flagClaimedRpc.js';
 
+export * from './math.js';
 export * from './multicall.js';
